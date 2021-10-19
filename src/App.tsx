@@ -1,5 +1,5 @@
-import React from 'react';
-import './App.css';
+import React, {useState} from "react";
+import "./App.css";
 import TodoList from "./components/TodoList/TodoList";
 
 export type TasksType = {
@@ -8,27 +8,44 @@ export type TasksType = {
     isDone: boolean
 }
 
+export type FilterTasksType = 'all' | "active" | "completed"
+
+
 function App() {
-    let tasks_1 : Array<TasksType> = [
-        {id: 1, title: 'HTML', isDone: true},
-        {id: 2, title: 'CSS', isDone: true},
-        {id: 3, title: 'React', isDone: true}
-    ]
-    let tasks_2 : Array<TasksType> = [
-        {id: 1, title: 'HTML', isDone: true},
-        {id: 2, title: 'CSS', isDone: true},
-        {id: 3, title: 'React', isDone: true}
-    ]
-    let tasks_3 : Array<TasksType> = [
-        {id: 1, title: 'HTML', isDone: true},
-        {id: 2, title: 'CSS', isDone: true},
-        {id: 3, title: 'React', isDone: true}
-    ]
+
+    let [tasks, SetTasks] = useState<Array<TasksType>>([
+        {id: 1, title: "HTML", isDone: true},
+        {id: 2, title: "CSS", isDone: true},
+        {id: 3, title: "bib", isDone: false},
+        {id: 4, title: "bub", isDone: true},
+        {id: 5, title: "bob", isDone: false},
+    ])
+
+    //Filter tasks to render
+    let [filter, SetFilter] = useState<FilterTasksType>("all")
+    let tasksToRender = tasks
+
+    if (filter === "active"){
+        tasksToRender = tasks.filter(el => el.isDone === false)
+    }
+    if (filter === "completed"){
+        tasksToRender = tasks.filter(el => el.isDone === true)
+    }
+    //Filtered
+    const filterTasks = (filter: FilterTasksType) => {
+        SetFilter(filter)
+    }
+    //Delete Task
+    const removeTask = (tasksID: number) => {
+        SetTasks(tasks.filter(el => el.id !== tasksID))
+    }
+
     return (
         <div className="App">
-            <TodoList title='What to buy' tasks={tasks_1}/>
-            <TodoList title='What to learn' tasks={tasks_2}/>
-            <TodoList title='What to eat' tasks={tasks_3}/>
+            <TodoList title="What to buy"
+                      tasks={tasksToRender}
+                      removeTask={removeTask}
+                      filterTasks={filterTasks}/>
         </div>
     );
 }
