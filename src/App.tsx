@@ -1,7 +1,7 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import "./App.css";
-import TodoList from "./components/TodoList/TodoList";
-import {v1} from "uuid";
+import { TodoList } from "./components/TodoList/TodoList";
+import { v1 } from "uuid";
 
 export type TasksType = {
     id: string
@@ -12,7 +12,7 @@ export type TasksType = {
 export type FilterTasksType = 'all' | "active" | "completed"
 
 
-function App() {
+export const App = () => {
 
     let [tasks, SetTasks] = useState<Array<TasksType>>([
         {id: v1(), title: "HTML", isDone: true},
@@ -36,8 +36,8 @@ function App() {
     const filterTasks = (filter: FilterTasksType) => {
         SetFilter(filter)
     }
-    //Delete Task
 
+    //Delete Task
     const removeTask = (tasksID: string) => {
         SetTasks(tasks.filter(el => el.id !== tasksID))
     }
@@ -76,4 +76,3 @@ function App() {
     );
 }
 
-export default App;
