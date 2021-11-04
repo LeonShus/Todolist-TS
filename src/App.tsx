@@ -54,23 +54,19 @@ export const App = () => {
 
     }
 
-    const checkChange = (e: string) => {
-        SetTasks(tasks.map(el => {
-            if(el.id === e){
-                el.isDone = !el.isDone
-            }
-            return el
-        }))
+    const checkChangeStatus = (id: string) => {
+        SetTasks(tasks.map(el => el.id === id ? {...el, isDone: !el.isDone} : el))
     }
 
     return (
         <div className="App">
             <TodoList title="What to buy"
                       tasks={tasksToRender}
+                      addTask={addTask}
                       removeTask={removeTask}
                       filterTasks={filterTasks}
-                      addTask={addTask}
-                      checkChange={checkChange}
+                      checkChangeStatus={checkChangeStatus}
+                      filter={filter}
             />
         </div>
     );

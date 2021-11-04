@@ -1,0 +1,21 @@
+
+.btnDefault{
+    background: white;
+    border: 1px solid gray;
+    border-radius: 5px;
+}
+
+.activeFilter{
+    background: dodgerblue;
+    border: 1px solid gray;
+    border-radius: 5px;
+}
+
+.isDone{
+    opacity: .6;
+}
+
+.error {
+    color: red;
+    font-size: 0.7rem;
+}
