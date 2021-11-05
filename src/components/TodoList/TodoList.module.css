@@ -19,3 +19,7 @@
     color: red;
     font-size: 0.7rem;
 }
+
+.errorInp {
+    background: rgb(255, 51, 51);
+}

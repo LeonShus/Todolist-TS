@@ -32,7 +32,7 @@ export const App = () => {
     if (filter === "completed"){
         tasksToRender = tasks.filter(el => el.isDone === true)
     }
-    //Filtered
+    //FilteredVal
     const filterTasks = (filter: FilterTasksType) => {
         SetFilter(filter)
     }
@@ -42,6 +42,7 @@ export const App = () => {
         SetTasks(tasks.filter(el => el.id !== tasksID))
     }
 
+    //AddTask
     const addTask = (e: string) => {
         const newTask : TasksType = {
             id: v1(),
@@ -54,8 +55,8 @@ export const App = () => {
 
     }
 
-    const checkChangeStatus = (id: string) => {
-        SetTasks(tasks.map(el => el.id === id ? {...el, isDone: !el.isDone} : el))
+    const changeTaskStatus = (id: string, isDone: boolean) => {
+        SetTasks(tasks.map(el => el.id === id ? {...el, isDone} : el))
     }
 
     return (
@@ -65,7 +66,7 @@ export const App = () => {
                       addTask={addTask}
                       removeTask={removeTask}
                       filterTasks={filterTasks}
-                      checkChangeStatus={checkChangeStatus}
+                      changeTaskStatus={changeTaskStatus}
                       filter={filter}
             />
         </div>

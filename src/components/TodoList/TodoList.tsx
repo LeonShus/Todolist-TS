@@ -10,7 +10,7 @@ type TodoListPropsType = {
     removeTask: (tasksID: string) => void
     filterTasks: (filter: FilterTasksType) => void
     addTask: (e: string) => void
-    checkChangeStatus: (id: string) => void
+    changeTaskStatus: (id: string, isDone: boolean) => void
     filter: FilterTasksType
 }
 
@@ -41,17 +41,19 @@ export const TodoList = (props: TodoListPropsType) => {
     }
 
     //Do Array of jsx Elements
-    const removeTaskBtn = (tId: string) => props.removeTask(tId)
-    const onChangeHandler = (tId: string) => props.checkChangeStatus(tId)
-
     const arrayOfTasksLi = props.tasks.map(el => {
+            const removeTaskBtn = () => props.removeTask(el.id)
+            const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+                return props.changeTaskStatus(el.id, e.currentTarget.checked)
+            }
+
             return (
                 <li key={el.id} className={el.isDone ? classes.isDone : ""}>
-                    <input onChange={() => onChangeHandler(el.id)}
+                    <input onChange={onChangeHandler}
                            type="checkbox"
                            checked={el.isDone}/>
                     <span>{el.title}</span>
-                    <Button name="X" callback={() => removeTaskBtn(el.id)}/>
+                    <Button name="&#x2716;" callback={removeTaskBtn}/>
                 </li>
             )
         }
@@ -72,6 +74,7 @@ export const TodoList = (props: TodoListPropsType) => {
                 <input onKeyPress={keyAdd}
                        onChange={changeTitleVal}
                        value={newTitleText}
+                       className={error ? classes.errorInp : ""}
                 />
                 <Button name="+" callback={addTask}/>
                 {error && <div className={classes.error}>{error}</div>}
