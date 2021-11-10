@@ -5,13 +5,15 @@ import classes from "./TodoList.module.css"
 
 
 type TodoListPropsType = {
+    id: string
     title: string
     tasks: Array<TasksType>
-    removeTask: (tasksID: string) => void
-    filterTasks: (filter: FilterTasksType) => void
-    addTask: (e: string) => void
-    changeTaskStatus: (id: string, isDone: boolean) => void
+    addTask: (title: string, todoListID: string) => void
+    removeTask: (tasksID: string, todoListID: string) => void
+    filterTasks: (filter: FilterTasksType, todoListID: string) => void
+    changeTaskStatus: (id: string, isDone: boolean, todoListID: string) => void
     filter: FilterTasksType
+    remoteTodoLost: (todoListID: string) => void
 }
 
 export const TodoList = (props: TodoListPropsType) => {
@@ -26,7 +28,7 @@ export const TodoList = (props: TodoListPropsType) => {
     }
     const addTask = () => {
         if (newTitleText.trim()) {
-            props.addTask(newTitleText.trim())
+            props.addTask(newTitleText.trim(), props.id)
             setNewTitleText("")
             setError("")
         } else {
@@ -42,9 +44,9 @@ export const TodoList = (props: TodoListPropsType) => {
 
     //Do Array of jsx Elements
     const arrayOfTasksLi = props.tasks.map(el => {
-            const removeTaskBtn = () => props.removeTask(el.id)
+            const removeTaskBtn = () => props.removeTask(el.id, props.id)
             const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-                return props.changeTaskStatus(el.id, e.currentTarget.checked)
+                return props.changeTaskStatus(el.id, e.currentTarget.checked, props.id)
             }
 
             return (
@@ -60,7 +62,7 @@ export const TodoList = (props: TodoListPropsType) => {
     )
 
     const filterButtons = (val: FilterTasksType) => {
-        props.filterTasks(val)
+        props.filterTasks(val, props.id)
     }
 
     const targetBtnClass = (e: string) => {
@@ -68,13 +70,16 @@ export const TodoList = (props: TodoListPropsType) => {
     }
 
     return (
-        <div className="todoList">
-            <h3>{props.title}</h3>
+        <div className={classes.container}>
+
+            <h3>{props.title}<Button name="&#x2716;" callback={() => props.remoteTodoLost(props.id)}/></h3>
+
             <div>
                 <input onKeyPress={keyAdd}
                        onChange={changeTitleVal}
                        value={newTitleText}
                        className={error ? classes.errorInp : ""}
+                       placeholder={"Enter your task"}
                 />
                 <Button name="+" callback={addTask}/>
                 {error && <div className={classes.error}>{error}</div>}
