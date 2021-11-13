@@ -25,6 +25,7 @@ export const App = () => {
     //BLL:
     const todoListID_1 = v1()
     const todoListID_2 = v1()
+
     const [todoLists, setTodoLists] = useState<Array<TodoListType>>([
         {id: todoListID_1, title: "Want to sell", filter: "all"},
         {id: todoListID_2, title: "Want to buy", filter: "all"},
@@ -101,10 +102,10 @@ export const App = () => {
         //Filter tasks to UI
         let tasksToRender = tasks[tl.id]
         if (tl.filter === "active") {
-            tasksToRender = tasks[tl.id].filter(el => el.isDone === false)
+            tasksToRender = tasks[tl.id].filter(el => !el.isDone)
         }
         if (tl.filter === "completed") {
-            tasksToRender = tasks[tl.id].filter(el => el.isDone === true)
+            tasksToRender = tasks[tl.id].filter(el => el.isDone)
         }
         return (
             <TodoList key={tl.id}
