@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import "./App.css";
 import {TodoList} from "./components/TodoList/TodoList";
 import {v1} from "uuid";
+import {AddItemForm} from "./components/TodoList/DefaultComponent/Input/AddItemForm";
 
 export type TasksType = {
     id: string
@@ -80,11 +81,25 @@ export const App = () => {
             [todoListID]: tasks[todoListID].map(el => el.id === id ? {...el, isDone} : el)
         })
     }
+
     //Remote TodoList
     const remoteTodoLost = (todoListID: string) => {
         setTodoLists(todoLists.filter(el => el.id !== todoListID))
         delete tasks[todoListID]
     }
+
+    const changeTodolistTitle = (title: string, todoListID: string) => {
+        setTodoLists(todoLists.map(el => el.id === todoListID ? {...el, title} : el))
+    }
+
+    //Change Title of Task
+    const changeTaskTitle = (taskId: string, title: string, todoListID: string) => {
+        SetTasks({
+            ...tasks,
+            [todoListID]: tasks[todoListID].map(el => el.id === taskId ? {...el, title} : el)
+        })
+    }
+
 
     //AddToDoList
     const addToDoList = (title: string) => {
@@ -118,12 +133,15 @@ export const App = () => {
                       changeTaskStatus={changeTaskStatus}
                       filter={tl.filter}
                       remoteTodoLost={remoteTodoLost}
+                      changeTodolistTitle={changeTodolistTitle}
+                      changeTaskTitle={changeTaskTitle}
             />
         )
     })
 
     return (
         <div className="App">
+            <AddItemForm addItem={addToDoList}/>
             {todoListComponents}
         </div>
     );

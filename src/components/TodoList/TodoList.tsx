@@ -1,7 +1,9 @@
-import React, {useState, KeyboardEvent, ChangeEvent} from "react";
+import React, {ChangeEvent} from "react";
 import {FilterTasksType, TasksType} from "../../App";
-import {Button} from "./DefaultComponent/Button";
+import {Button} from "./DefaultComponent/Button/Button";
 import classes from "./TodoList.module.css"
+import {AddItemForm} from "./DefaultComponent/Input/AddItemForm";
+import {EditableSpan} from "./DefaultComponent/Span/EditableSpan";
 
 
 type TodoListPropsType = {
@@ -14,33 +16,11 @@ type TodoListPropsType = {
     changeTaskStatus: (id: string, isDone: boolean, todoListID: string) => void
     filter: FilterTasksType
     remoteTodoLost: (todoListID: string) => void
+    changeTodolistTitle: (title: string, todoListID: string) => void
+    changeTaskTitle: (taskId: string, title: string, todoListID: string) => void
 }
 
 export const TodoList = (props: TodoListPropsType) => {
-    console.log(props, "TodoList")
-
-    let [newTitleText, setNewTitleText] = useState<string>("")
-    let [error, setError] = useState("")
-
-    const changeTitleVal = (e: ChangeEvent<HTMLInputElement>) => {
-        setNewTitleText(e.currentTarget.value)
-        setError("")
-    }
-    const addTask = () => {
-        if (newTitleText.trim()) {
-            props.addTask(newTitleText.trim(), props.id)
-            setNewTitleText("")
-            setError("")
-        } else {
-            setError("Incorrect value")
-            return
-        }
-    }
-    const keyAdd = (e: KeyboardEvent<HTMLInputElement>) => {
-        if (e.key === "Enter") {
-            addTask()
-        }
-    }
 
     //Do Array of jsx Elements
     const arrayOfTasksLi = props.tasks.map(el => {
@@ -48,13 +28,15 @@ export const TodoList = (props: TodoListPropsType) => {
             const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
                 return props.changeTaskStatus(el.id, e.currentTarget.checked, props.id)
             }
-
+            const editableSpanCallBack = (title: string) => {
+                props.changeTaskTitle(el.id, title, props.id)
+            }
             return (
                 <li key={el.id} className={el.isDone ? classes.isDone : ""}>
                     <input onChange={onChangeHandler}
                            type="checkbox"
                            checked={el.isDone}/>
-                    <span>{el.title}</span>
+                    <EditableSpan title={el.title} callBack={editableSpanCallBack}/>
                     <Button name="&#x2716;" callback={removeTaskBtn}/>
                 </li>
             )
@@ -69,41 +51,39 @@ export const TodoList = (props: TodoListPropsType) => {
         return props.filter === e ? classes.activeFilter : classes.btnDefault
     }
 
+    //Callback To addTask
+    const addTaskCallback = (text: string) => {
+        props.addTask(text, props.id)
+    }
+
+    const changetoDoListTitleCallback = (toDoListTitle: string) => {
+        props.changeTodolistTitle(toDoListTitle, props.id)
+    }
+
     return (
         <div className={classes.container}>
+            <EditableSpan title={props.title} callBack={changetoDoListTitleCallback}/>
+            <Button name="&#x2716;" callback={() => props.remoteTodoLost(props.id)}/>
+            {/*<h3>{props.title}<Button name="&#x2716;" callback={() => props.remoteTodoLost(props.id)}/></h3>*/}
 
-            <h3>{props.title}<Button name="&#x2716;" callback={() => props.remoteTodoLost(props.id)}/></h3>
-
-            <div>
-                <input onKeyPress={keyAdd}
-                       onChange={changeTitleVal}
-                       value={newTitleText}
-                       className={error ? classes.errorInp : ""}
-                       placeholder={"Enter your task"}
-                />
-                <Button name="+" callback={addTask}/>
-                {error && <div className={classes.error}>{error}</div>}
-            </div>
+            <AddItemForm addItem={addTaskCallback}/>
 
             <ul>
                 {arrayOfTasksLi}
             </ul>
             <div>
-                <button className={targetBtnClass("all")}
-                        onClick={() => filterButtons("all")}>All
-                </button>
-
-                <button className={targetBtnClass("active")}
-                        onClick={() => filterButtons("active")}>Active
-                </button>
-
-                <button className={targetBtnClass("completed")}
-                        onClick={() => filterButtons("completed")}>Completed
-                </button>
-
-                {/*<Button  name='All' callback={() => filterButtons('all')}/>*/}
-                {/*<Button name='Active' callback={() => filterButtons('active')}/>*/}
-                {/*<Button name='Completed' callback={() => filterButtons('completed')}/>*/}
+                <Button style={props.filter === "all" ? classes.activeFilter : classes.btnDefault}
+                        name="All"
+                        callback={() => filterButtons("all")}
+                />
+                <Button style={props.filter === "active" ? classes.activeFilter : classes.btnDefault}
+                        name="Active"
+                        callback={() => filterButtons("active")}
+                />
+                <Button style={props.filter === "completed" ? classes.activeFilter : classes.btnDefault}
+                        name="Completed"
+                        callback={() => filterButtons("completed")}
+                />
             </div>
         </div>
     );

@@ -3,15 +3,16 @@ import React from "react";
 type ButtonType ={
     name: string
     callback: () => void
+    style?: string
 }
 
-export const Button = ({name, callback}: ButtonType) => {
+export const Button = ({name, callback, style}: ButtonType) => {
 
     const onClickHandler = () => {
         callback()
     }
 
     return(
-        <button onClick={onClickHandler}>{name}</button>
+        <button className={style} onClick={onClickHandler}>{name}</button>
     )
 }
