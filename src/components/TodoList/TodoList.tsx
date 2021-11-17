@@ -1,9 +1,9 @@
 import React, {ChangeEvent} from "react";
 import {FilterTasksType, TasksType} from "../../App";
-import {Button} from "./DefaultComponent/Button/Button";
+import {Button} from "../DefaultComponent/Button/Button";
 import classes from "./TodoList.module.css"
-import {AddItemForm} from "./DefaultComponent/Input/AddItemForm";
-import {EditableSpan} from "./DefaultComponent/Span/EditableSpan";
+import {AddItemForm} from "../DefaultComponent/Input/AddItemForm";
+import {EditableSpan} from "../DefaultComponent/Span/EditableSpan";
 
 
 type TodoListPropsType = {
@@ -32,12 +32,13 @@ export const TodoList = (props: TodoListPropsType) => {
                 props.changeTaskTitle(el.id, title, props.id)
             }
             return (
-                <li key={el.id} className={el.isDone ? classes.isDone : ""}>
+                <li key={el.id} className={`${el.isDone ? classes.isDone : ""} ${classes.liStyle}`}>
+
                     <input onChange={onChangeHandler}
                            type="checkbox"
                            checked={el.isDone}/>
                     <EditableSpan title={el.title} callBack={editableSpanCallBack}/>
-                    <Button name="&#x2716;" callback={removeTaskBtn}/>
+                    <Button style={classes.btnStyle} name="&#x2716;" callback={removeTaskBtn}/>
                 </li>
             )
         }
@@ -46,10 +47,7 @@ export const TodoList = (props: TodoListPropsType) => {
     const filterButtons = (val: FilterTasksType) => {
         props.filterTasks(val, props.id)
     }
-
-    const targetBtnClass = (e: string) => {
-        return props.filter === e ? classes.activeFilter : classes.btnDefault
-    }
+    //
 
     //Callback To addTask
     const addTaskCallback = (text: string) => {
@@ -64,7 +62,6 @@ export const TodoList = (props: TodoListPropsType) => {
         <div className={classes.container}>
             <EditableSpan title={props.title} callBack={changetoDoListTitleCallback}/>
             <Button name="&#x2716;" callback={() => props.remoteTodoLost(props.id)}/>
-            {/*<h3>{props.title}<Button name="&#x2716;" callback={() => props.remoteTodoLost(props.id)}/></h3>*/}
 
             <AddItemForm addItem={addTaskCallback}/>
 

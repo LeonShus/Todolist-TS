@@ -1,0 +1,25 @@
+.spanStyle {
+    font-family: system-ui;;
+    font-size: 1.1rem;
+    cursor: pointer;
+}
+.spanStyle:hover{
+    color: #1E90FF;
+    transition: color .5s;
+}
+
+.spanStyle:hover::before{
+    content: 'DoubleClick to Edit';
+    color: black;
+    position: absolute;
+    margin-left: 5px;
+    z-index: 10;
+    opacity: 1;
+    border: 1px solid black;
+    border-radius: 5px;
+    font-size: .7rem;
+    background-color: white;
+    padding: 3px;
+    margin-top: 1.5rem;
+    pointer-events: none;
+}

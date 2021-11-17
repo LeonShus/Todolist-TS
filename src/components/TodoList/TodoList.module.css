@@ -4,6 +4,19 @@
     padding: 20px;
 }
 
+.liStyle {
+    display: flex;
+    position: relative;
+    left: -20px;
+}
+
+.btnStyle {
+    position: relative;
+    left: 5px;
+    margin-left: auto;
+    z-index: 2;
+}
+
 .btnDefault{
     background: white;
     border: 1px solid gray;
@@ -17,6 +30,6 @@
 }
 
 .isDone{
-    opacity: .6;
+    color: rgba(0, 0, 0, 0.6);
 }
 

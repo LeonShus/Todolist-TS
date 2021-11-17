@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import "./App.css";
 import {TodoList} from "./components/TodoList/TodoList";
 import {v1} from "uuid";
-import {AddItemForm} from "./components/TodoList/DefaultComponent/Input/AddItemForm";
+import {AddItemForm} from "./components/DefaultComponent/Input/AddItemForm";
 
 export type TasksType = {
     id: string
