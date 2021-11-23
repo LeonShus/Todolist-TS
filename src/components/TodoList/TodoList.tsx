@@ -23,7 +23,7 @@ type TodoListPropsType = {
 
 export const TodoList = (props: TodoListPropsType) => {
 
-    //Do Array of jsx Elements
+    //Do Array of jsx Elements TASKS ITEMS
     const arrayOfTasksLi = props.tasks.map(el => {
             const removeTaskBtn = () => props.removeTask(el.id, props.id)
             const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -67,14 +67,14 @@ export const TodoList = (props: TodoListPropsType) => {
     }
 
     return (
-        <div className={classes.container}>
+        <div>
+            {/*Task Input*/}
             <IconButton onClick={() => props.remoteTodoLost(props.id)}
                         sx={{
                             margin: "0",
                             padding: "0",
                             position: "relative",
                             left: "230px",
-                            top: "3px"
                         }}
             >
                 <Clear/>
@@ -83,12 +83,13 @@ export const TodoList = (props: TodoListPropsType) => {
                 <EditableSpan textStyle={"h6"} title={props.title} callBack={changeToDoListTitleCallback}/>
             </Typography>
 
-
             <AddItemForm addItem={addTaskCallback}/>
 
+            {/*Tasks List*/}
             <List>
                 {arrayOfTasksLi}
             </List>
+            {/*Filter Buttons*/}
             <div>
                 <ButtonGroup size={"small"} variant={"outlined"}>
                     <Button

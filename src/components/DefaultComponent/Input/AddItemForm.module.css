@@ -1,8 +1,4 @@
-.error {
-    color: red;
-    font-size: 0.7rem;
-}
-
-.errorInp {
-    background: rgb(255, 51, 51);
+.cont {
+    min-width: 240px;
+    height: 40px;
 }

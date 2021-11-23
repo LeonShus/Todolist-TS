@@ -1,4 +1,5 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from "react";
+import classes from './AddItemForm.module.css'
 import {IconButton, TextField} from "@mui/material";
 import {Add} from "@mui/icons-material";
 
@@ -34,13 +35,14 @@ export const AddItemForm = (props: AddItemFormPropsType) => {
     }
 
     return (
-        <div>
+        <div className={classes.cont}>
             <TextField variant={"standard"}
                        onKeyPress={keyAdd}
                        onChange={changeTitleVal}
                        value={newTitleText}
                        error={!!errorFil}
                        helperText={errorFil}
+                       sx={{ minWidth: "198px"}}
             />
             <IconButton onClick={addItem} color={"primary"}>
                 <Add/>
