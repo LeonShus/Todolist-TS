@@ -109,7 +109,7 @@ export const App = () => {
             filter: "all"
         }
         setTodoLists([...todoLists, newToDoList])
-        SetTasks({ ...tasks, [newToDoList.id] : [] })
+        SetTasks({...tasks, [newToDoList.id]: []})
     }
 
 
@@ -140,10 +140,13 @@ export const App = () => {
     })
 
     return (
+
+
         <div className="App">
             <AddItemForm addItem={addToDoList}/>
             {todoListComponents}
         </div>
+
     );
 }
 

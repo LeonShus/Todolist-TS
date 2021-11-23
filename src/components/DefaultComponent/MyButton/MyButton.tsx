@@ -6,7 +6,7 @@ type ButtonType ={
     style?: string
 }
 
-export const Button = ({name, callback, style}: ButtonType) => {
+export const MyButton = ({name, callback, style}: ButtonType) => {
 
     const onClickHandler = () => {
         callback()

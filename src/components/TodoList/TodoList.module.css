@@ -1,33 +1,33 @@
 .container {
     border: 1px solid black;
     border-radius: 10px;
-    padding: 20px;
+    padding: 0 20px 20px 20px;
 }
 
-.liStyle {
-    display: flex;
-    position: relative;
-    left: -20px;
-}
+/*.liStyle {*/
+/*    display: flex;*/
+/*    position: relative;*/
+/*    left: -20px;*/
+/*}*/
 
-.btnStyle {
-    position: relative;
-    left: 5px;
-    margin-left: auto;
-    z-index: 2;
-}
+/*.btnStyle {*/
+/*    position: relative;*/
+/*    left: 5px;*/
+/*    margin-left: auto;*/
+/*    z-index: 2;*/
+/*}*/
 
-.btnDefault{
-    background: white;
-    border: 1px solid gray;
-    border-radius: 5px;
-}
+/*.btnDefault{*/
+/*    background: white;*/
+/*    border: 1px solid gray;*/
+/*    border-radius: 5px;*/
+/*}*/
 
-.activeFilter{
-    background: dodgerblue;
-    border: 1px solid gray;
-    border-radius: 5px;
-}
+/*.activeFilter{*/
+/*    background: dodgerblue;*/
+/*    border: 1px solid gray;*/
+/*    border-radius: 5px;*/
+/*}*/
 
 .isDone{
     color: rgba(0, 0, 0, 0.6);
