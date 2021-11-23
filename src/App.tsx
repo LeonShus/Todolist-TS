@@ -141,7 +141,6 @@ export const App = () => {
 
     return (
 
-
         <div className="App">
             <AddItemForm addItem={addToDoList}/>
             {todoListComponents}

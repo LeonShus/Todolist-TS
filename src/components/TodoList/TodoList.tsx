@@ -3,7 +3,7 @@ import {FilterTasksType, TasksType} from "../../App";
 import classes from "./TodoList.module.css"
 import {AddItemForm} from "../DefaultComponent/Input/AddItemForm";
 import {EditableSpan} from "../DefaultComponent/Span/EditableSpan";
-import {Button, ButtonGroup, IconButton, List, ListItem, Typography} from "@mui/material";
+import {Button, ButtonGroup, Checkbox, IconButton, List, ListItem, Typography} from "@mui/material";
 import {Clear, Delete} from "@mui/icons-material";
 
 
@@ -40,9 +40,8 @@ export const TodoList = (props: TodoListPropsType) => {
                           sx={{pl: "16px"}}
                 >
 
-                    <input onChange={onChangeHandler}
-                           type="checkbox"
-                           checked={el.isDone}
+                    <Checkbox onChange={onChangeHandler}
+                              checked={el.isDone}
                     />
                     <EditableSpan title={el.title} callBack={editableSpanCallBack}/>
                     <IconButton onClick={removeTaskBtn}>
@@ -71,17 +70,17 @@ export const TodoList = (props: TodoListPropsType) => {
         <div className={classes.container}>
             <IconButton onClick={() => props.remoteTodoLost(props.id)}
                         sx={{
-                            margin: '0',
-                            padding: '0',
-                            position: 'relative',
-                            left: '230px',
-                            top: '3px'
+                            margin: "0",
+                            padding: "0",
+                            position: "relative",
+                            left: "230px",
+                            top: "3px"
                         }}
             >
                 <Clear/>
             </IconButton>
             <Typography sx={{fontWeight: "bold"}}>
-                <EditableSpan textStyle={'h6'} title={props.title} callBack={changeToDoListTitleCallback}/>
+                <EditableSpan textStyle={"h6"} title={props.title} callBack={changeToDoListTitleCallback}/>
             </Typography>
 
 
