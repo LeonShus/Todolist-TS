@@ -146,6 +146,7 @@ export const App = () => {
 
     return (
         <>
+            {/*Header*/}
             <AppBar position="static">
                 <Toolbar style={{justifyContent: "space-between"}}>
                     <IconButton edge="start"
@@ -164,11 +165,13 @@ export const App = () => {
                     </Button>
                 </Toolbar>
             </AppBar>
+            {/*Main*/}
             <Container fixed>
                 <Grid container sx={{padding: "10px 0 10px "}}>
                     <AddItemForm addItem={addToDoList}/>
                 </Grid>
-                <Grid container spacing={3}>
+                {/*TodoLists*/}
+                <Grid container spacing={5}>
                     {todoListComponents}
                 </Grid>
             </Container>
