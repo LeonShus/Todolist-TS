@@ -1,4 +1,4 @@
-import {ActionsType, todoListReducer} from "./Reducer";
+import {ActionsType, todoListReducer} from "./TodoListReducer";
 import {v1} from 'uuid';
 import {FilterTasksType, TodoListType} from "../App";
 
