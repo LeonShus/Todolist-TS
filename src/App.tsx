@@ -156,7 +156,7 @@ export const App = () => {
                         <Menu/>
                     </IconButton>
                     <Typography variant="h6">
-                        Todolists
+                        TodoLists
                     </Typography>
                     <Button color="inherit"
                             variant={"outlined"}
