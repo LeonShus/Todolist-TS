@@ -165,7 +165,7 @@ export const App = () => {
                     </Button>
                 </Toolbar>
             </AppBar>
-            {/*Main*/}
+            {/*Skills*/}
             <Container fixed>
                 <Grid container sx={{padding: "10px 0 10px "}}>
                     <AddItemForm addItem={addToDoList}/>
