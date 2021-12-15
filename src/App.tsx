@@ -1,4 +1,4 @@
-import React, {useReducer, useState} from "react";
+import React, {useReducer} from "react";
 import "./App.css";
 import {TodoList} from "./components/TodoList/TodoList";
 import {v1} from "uuid";
@@ -43,11 +43,11 @@ export const App = () => {
     const todoListID_1 = v1()
     const todoListID_2 = v1()
 
-    const [todoLists, dispatchToTodoLists] = useReducer(todoListReducer,[
+    const [todoLists, dispatchToTodoLists] = useReducer(todoListReducer, [
         {id: todoListID_1, title: "Want to sell", filter: "all"},
         {id: todoListID_2, title: "Want to buy", filter: "all"},
     ])
-    let [tasks, dispatchToTasks] = useReducer(tasksReducer,{
+    let [tasks, dispatchToTasks] = useReducer(tasksReducer, {
         [todoListID_1]:
             [
                 {id: v1(), title: "HTML", isDone: true},

@@ -3,9 +3,17 @@ import {v1} from "uuid";
 import {AddTodoListAT, RemoveTodoListAT} from "./TodoListReducer";
 
 
-export type ActionsType = removeTaskAT | addTaskACT | ChangeTaskStatusAT | ChangeTaskTitleAT | AddTodoListAT | RemoveTodoListAT
+export type ActionsType =
+    removeTaskAT
+    | addTaskACT
+    | ChangeTaskStatusAT
+    | ChangeTaskTitleAT
+    | AddTodoListAT
+    | RemoveTodoListAT
 
-export const tasksReducer = (state: TasksStateType, action: ActionsType): TasksStateType => {
+const initialState: TasksStateType = {}
+
+export const tasksReducer = (state: TasksStateType = initialState, action: ActionsType): TasksStateType => {
     switch (action.type) {
         case "REMOVE-TASK":
             return {
@@ -25,13 +33,13 @@ export const tasksReducer = (state: TasksStateType, action: ActionsType): TasksS
             return {
                 ...state,
                 [action.todoListId]: state[action.todoListId]
-                    .map(el => el.id === action.taskId ? { ...el, isDone: action.isDone } : el)
+                    .map(el => el.id === action.taskId ? {...el, isDone: action.isDone} : el)
             }
         case "CHANGE-TASK-TITLE":
             return {
                 ...state,
                 [action.todoListId]: state[action.todoListId]
-                    .map(el => el.id === action.taskId ? { ...el, title: action.title } : el)
+                    .map(el => el.id === action.taskId ? {...el, title: action.title} : el)
             }
         case "ADD-TODOLIST":
             return {
