@@ -1,5 +1,5 @@
 import React, {ChangeEvent} from "react";
-import {FilterTasksType, TasksType} from "../../App";
+import {FilterTasksType, TasksType} from "../../AppWithReducer";
 import classes from "./TodoList.module.css"
 import {AddItemForm} from "../DefaultComponent/Input/AddItemForm";
 import {EditableSpan} from "../DefaultComponent/Span/EditableSpan";

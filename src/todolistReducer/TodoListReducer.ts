@@ -1,9 +1,12 @@
-import {FilterTasksType, TodoListType} from "../App";
+import {FilterTasksType, TodoListType} from "../AppWithReducer";
 
 
 export type ActionsType = RemoveTodoListAT | AddTodoListAT | ChangeTodoListTitleAT | FilterTodoListAT
 
-const initialState: Array<TodoListType> = []
+const initialState: Array<TodoListType> = [
+    {id: '1', title: "WantTo sell", filter: "all"},
+    {id: '2', title: "Want to buy", filter: "all"},
+]
 
 export const todoListReducer = (state: Array<TodoListType> = initialState, action: ActionsType): Array<TodoListType> => {
     switch (action.type) {
