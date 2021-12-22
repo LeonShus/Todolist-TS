@@ -1,4 +1,4 @@
-import React, {ChangeEvent} from "react";
+import React, {ChangeEvent, useCallback} from "react";
 import {FilterTasksType, TasksType} from "../../AppWithReducer";
 import classes from "./TodoList.module.css"
 import {AddItemForm} from "../DefaultComponent/Input/AddItemForm";
@@ -58,9 +58,9 @@ export const TodoList = (props: TodoListPropsType) => {
     //
 
     //Callback To addTask
-    const addTaskCallback = (text: string) => {
+    const addTask = useCallback((text: string) => {
         props.addTask(text, props.id)
-    }
+    },[props.addTask, props.id])
 
     const changeToDoListTitleCallback = (toDoListTitle: string) => {
         props.changeTodolistTitle(toDoListTitle, props.id)
@@ -83,7 +83,7 @@ export const TodoList = (props: TodoListPropsType) => {
                 <EditableSpan textStyle={"h6"} title={props.title} callBack={changeToDoListTitleCallback}/>
             </Typography>
 
-            <AddItemForm addItem={addTaskCallback}/>
+            <AddItemForm addItem={addTask}/>
 
             {/*Tasks List*/}
             <List>

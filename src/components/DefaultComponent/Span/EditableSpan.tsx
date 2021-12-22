@@ -49,11 +49,12 @@ export const EditableSpan = ({title, callBack, textStyle}: EditableSpanPropsType
             {!editMode
                 ? <Typography
                     variant={textStyle}
+                    component={"span"}
                     className={classes.spanStyle}
                     onDoubleClick={onEditMode}
                     sx={{flexGrow: 1}}
                 >
-                    {title}
+                   {title}
                 </Typography>
                 : <TextField autoFocus
                              variant={"standard"}
