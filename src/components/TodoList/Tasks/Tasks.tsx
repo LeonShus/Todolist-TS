@@ -13,7 +13,7 @@ type TasksPropsType = {
     title: string
 }
 
-export const Tasks = (props: TasksPropsType) => {
+export const Task = (props: TasksPropsType) => {
 
     const dispatch = useDispatch()
 

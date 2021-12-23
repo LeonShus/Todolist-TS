@@ -41,29 +41,10 @@ export const AppWithRedux = () => {
     const tasks = useSelector<AppRootStateType, TasksStateType>(state => state.tasks)
 
 
-    //FilteredVal
-    const filterTasks = useCallback((filter: FilterTasksType, todoListID: string) => {
-        dispatch(filterTodoListAC(filter, todoListID))
-    }, [dispatch])
-    //AddTask
-    const addTask = useCallback((title: string, todoListID: string) => {
-        dispatch(addTaskAC(title, todoListID))
-
-    }, [dispatch])
-
-
     //AddToDoList
     const addToDoList = useCallback((title: string) => {
         const newId = v1()
         dispatch(addTodolistAC(title, newId))
-    }, [dispatch])
-    //Remote TodoList
-    const remoteTodoLost = useCallback((todoListID: string) => {
-        dispatch(removeTodoListAC(todoListID))
-    }, [dispatch])
-    //Change Title
-    const changeTodolistTitle = useCallback((title: string, todoListID: string) => {
-        dispatch(changeTodoListTitleAC(title, todoListID))
     }, [dispatch])
 
 
@@ -74,12 +55,7 @@ export const AppWithRedux = () => {
                     <TodoList todoListId={tl.id}
                               title={tl.title}
                               tasks={tasks[tl.id]}
-                              addTask={addTask}
-                              filterTasks={filterTasks}
                               filter={tl.filter}
-                              remoteTodoLost={remoteTodoLost}
-                              changeTodolistTitle={changeTodolistTitle}
-
                     />
                 </Paper>
             </Grid>

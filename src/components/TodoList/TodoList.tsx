@@ -4,23 +4,25 @@ import {AddItemForm} from "../DefaultComponent/Input/AddItemForm";
 import {EditableSpan} from "../DefaultComponent/Span/EditableSpan";
 import {Button, ButtonGroup, IconButton, List} from "@mui/material";
 import {Clear} from "@mui/icons-material";
-import {Tasks} from "./Tasks/Tasks";
+import {Task} from "./Tasks/Tasks";
+import {useDispatch} from "react-redux";
+import {changeTodoListTitleAC, filterTodoListAC, removeTodoListAC} from "../../todolistReducer/TodoListReducer";
+import {addTaskAC} from "../../todolistReducer/TaskReducer";
 
 
 type TodoListPropsType = {
     todoListId: string
     title: string
     tasks: Array<TasksType>
-    addTask: (title: string, todoListID: string) => void
-    filterTasks: (filter: FilterTasksType, todoListID: string) => void
     filter: FilterTasksType
-    remoteTodoLost: (todoListID: string) => void
-    changeTodolistTitle: (title: string, todoListID: string) => void
 }
 
 export const TodoList = React.memo((props: TodoListPropsType) => {
     console.log("TODOLIST")
-    //Filter tasks to UI
+
+    const dispatch = useDispatch()
+
+    //Filter tasks
     let tasksToRender = props.tasks
     if (props.filter === "active") {
         tasksToRender = props.tasks.filter(el => !el.isDone)
@@ -31,7 +33,7 @@ export const TodoList = React.memo((props: TodoListPropsType) => {
     //Do Array of jsx Elements TASKS ITEM
     const arrayOfTasksLi = tasksToRender.map(el => {
             return (
-                <Tasks
+                <Task
                     key={el.id}
                     taskId={el.id}
                     isDone={el.isDone}
@@ -41,25 +43,28 @@ export const TodoList = React.memo((props: TodoListPropsType) => {
             )
         }
     )
-
-    const filterButtons = (val: FilterTasksType) => {
-        props.filterTasks(val, props.todoListId)
+    //Filter
+    const filteredTasks = (val: FilterTasksType) => {
+        dispatch(filterTodoListAC(val, props.todoListId))
     }
-    //
-
     //Callback To addTask
-    const addTask = useCallback((text: string) => {
-        props.addTask(text, props.todoListId)
-    }, [props.addTask, props.todoListId])
+    const addTask = (text: string) => {
+        dispatch(addTaskAC(text, props.todoListId))
+    }
 
-    const changeToDoListTitleCallback = useCallback((toDoListTitle: string) => {
-        props.changeTodolistTitle(toDoListTitle, props.todoListId)
-    }, [props.todoListId])
+    //TodoList Title Change
+    const changeTodoListTitle = (toDoListTitle: string) => {
+        dispatch(changeTodoListTitleAC(toDoListTitle, props.todoListId))
+    }
+
+    const removeTodoList = () => {
+        dispatch(removeTodoListAC(props.todoListId))
+    }
 
     return (
         <div>
             {/*Task Input*/}
-            <IconButton onClick={() => props.remoteTodoLost(props.todoListId)}
+            <IconButton onClick={removeTodoList}
                         sx={{
                             margin: "0",
                             padding: "0",
@@ -71,7 +76,7 @@ export const TodoList = React.memo((props: TodoListPropsType) => {
             </IconButton>
 
             <div>
-                <EditableSpan textStyle={"h6"} title={props.title} callBack={changeToDoListTitleCallback}/>
+                <EditableSpan textStyle={"h6"} title={props.title} callBack={changeTodoListTitle}/>
             </div>
 
 
@@ -86,19 +91,19 @@ export const TodoList = React.memo((props: TodoListPropsType) => {
                 <ButtonGroup size={"small"} variant={"outlined"}>
                     <Button
                         color={props.filter === "all" ? "secondary" : "primary"}
-                        onClick={() => filterButtons("all")}
+                        onClick={() => filteredTasks("all")}
                     >
                         All
                     </Button>
                     <Button
                         color={props.filter === "active" ? "secondary" : "primary"}
-                        onClick={() => filterButtons("active")}
+                        onClick={() => filteredTasks("active")}
                     >
                         Active
                     </Button>
                     <Button
                         color={props.filter === "completed" ? "secondary" : "primary"}
-                        onClick={() => filterButtons("completed")}
+                        onClick={() => filteredTasks("completed")}
                     >
                         Completed
                     </Button>
