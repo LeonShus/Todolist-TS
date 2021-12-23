@@ -25,7 +25,7 @@ type EditableSpanPropsType = {
     textStyle?: textStyleType
 }
 
-export const EditableSpan = ({title, callBack, textStyle}: EditableSpanPropsType) => {
+export const EditableSpan = React.memo(({title, callBack, textStyle}: EditableSpanPropsType) => {
 
     let [titleText, setTitleText] = useState<string>(title)
     const changeTitleVal = (e: ChangeEvent<HTMLInputElement>) => {
@@ -63,9 +63,7 @@ export const EditableSpan = ({title, callBack, textStyle}: EditableSpanPropsType
                              onBlur={changeItemTitle} type="text"
                              value={titleText}/>
             }
-
-
         </>
     )
-}
+})
 

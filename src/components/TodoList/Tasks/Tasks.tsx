@@ -13,7 +13,7 @@ type TasksPropsType = {
     title: string
 }
 
-export const Task = (props: TasksPropsType) => {
+export const Task = React.memo((props: TasksPropsType) => {
 
     const dispatch = useDispatch()
 
@@ -25,6 +25,7 @@ export const Task = (props: TasksPropsType) => {
         dispatch(changeTaskTitleAC(props.taskId, title, props.todoListId))
     }
     return (
+        // Task
         <ListItem key={props.taskId}
                   className={`${props.isDone ? classes.isDone : ""}`}
                   disablePadding
@@ -41,4 +42,4 @@ export const Task = (props: TasksPropsType) => {
             </IconButton>
         </ListItem>
     )
-}
+})

@@ -3,11 +3,11 @@ import "./App.css";
 import {TodoList} from "./components/TodoList/TodoList";
 import {v1} from "uuid";
 import {AddItemForm} from "./components/DefaultComponent/Input/AddItemForm";
-import {AppBar, Button, Container, Grid, IconButton, Toolbar, Typography} from "@mui/material";
-import {Menu} from "@mui/icons-material";
+import {Container, Grid} from "@mui/material";
 import {addTodolistAC} from "./todolistReducer/TodoListReducer";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "./bll/store";
+import {Header} from "./components/Header/Header";
 
 export type TasksType = {
     id: string
@@ -57,31 +57,14 @@ export const AppWithRedux = () => {
     return (
         <>
             {/*Header*/}
-            <AppBar position="static">
-                <Toolbar style={{justifyContent: "space-between"}}>
-                    <IconButton edge="start"
-                                color="inherit"
-                                aria-label="menu"
-                    >
-                        <Menu/>
-                    </IconButton>
-                    <Typography variant="h6" component={"span"}>
-                        TodoLists
-                    </Typography>
-                    <Button color="inherit"
-                            variant={"outlined"}
-                    >
-                        Login
-                    </Button>
-                </Toolbar>
-            </AppBar>
-            {/*Skills*/}
+            <Header/>
+            {/*Main*/}
             <Container fixed>
                 {/*Add TodoList*/}
                 <Grid container sx={{padding: "10px 0 10px "}}>
                     <AddItemForm addItem={addToDoList}/>
                 </Grid>
-                {/*TodoLists + Tasks*/}
+                {/*TodoLists*/}
                 <Grid container spacing={5}>
                     {todoListsComponents}
                 </Grid>
