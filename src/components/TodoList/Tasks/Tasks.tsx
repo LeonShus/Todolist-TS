@@ -4,7 +4,7 @@ import classes from "../TodoList.module.css";
 import {EditableSpan} from "../../DefaultComponent/Span/EditableSpan";
 import {Delete} from "@mui/icons-material";
 import {useDispatch} from "react-redux";
-import {removeTaskAC} from "../../../todolistReducer/TaskReducer";
+import {changeTaskStatusAC, removeTaskAC} from "../../../todolistReducer/TaskReducer";
 
 type TasksPropsType = {
     taskId: string
@@ -20,10 +20,10 @@ export const Tasks = (props: TasksPropsType) => {
 
     const dispatch = useDispatch()
     const removeTaskBtn = () => dispatch(removeTaskAC(props.taskId, props.todoListId))
-    // const removeTaskBtn = () => props.removeTask(props.taskId, props.todoListId)
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        return props.changeTaskStatus(props.taskId, e.currentTarget.checked, props.todoListId)
+        dispatch(changeTaskStatusAC(props.taskId, e.currentTarget.checked, props.todoListId))
     }
+
     const editableSpanCallBack = (title: string) => {
         props.changeTaskTitle(props.taskId, title, props.todoListId)
     }
