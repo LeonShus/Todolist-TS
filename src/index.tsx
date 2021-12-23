@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-// import { App } from './AppWithReducer';
 import * as serviceWorker from './serviceWorker';
 import {AppWithRedux} from "./AppWithRedux";
 import {Provider} from "react-redux";

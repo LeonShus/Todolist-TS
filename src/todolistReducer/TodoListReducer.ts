@@ -1,4 +1,4 @@
-import {FilterTasksType, TodoListType} from "../AppWithReducer";
+import {FilterTasksType, TodoListType} from "../AppWithRedux";
 
 
 export type ActionsType = RemoveTodoListAT | AddTodoListAT | ChangeTodoListTitleAT | FilterTodoListAT

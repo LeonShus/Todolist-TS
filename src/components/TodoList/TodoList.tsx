@@ -1,14 +1,15 @@
 import React, {ChangeEvent, useCallback} from "react";
-import {FilterTasksType, TasksType} from "../../AppWithReducer";
+import {FilterTasksType, TasksType} from "../../AppWithRedux";
 import classes from "./TodoList.module.css"
 import {AddItemForm} from "../DefaultComponent/Input/AddItemForm";
 import {EditableSpan} from "../DefaultComponent/Span/EditableSpan";
 import {Button, ButtonGroup, Checkbox, IconButton, List, ListItem, Typography} from "@mui/material";
 import {Clear, Delete} from "@mui/icons-material";
+import {Tasks} from "./Tasks/Tasks";
 
 
 type TodoListPropsType = {
-    id: string
+    todoListId: string
     title: string
     tasks: Array<TasksType>
     addTask: (title: string, todoListID: string) => void
@@ -33,51 +34,39 @@ export const TodoList = React.memo((props: TodoListPropsType) => {
     }
     //Do Array of jsx Elements TASKS ITEM
     const arrayOfTasksLi = tasksToRender.map(el => {
-            const removeTaskBtn = () => props.removeTask(el.id, props.id)
-            const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-                return props.changeTaskStatus(el.id, e.currentTarget.checked, props.id)
-            }
-            const editableSpanCallBack = (title: string) => {
-                props.changeTaskTitle(el.id, title, props.id)
-            }
             return (
-                <ListItem key={el.id}
-                          className={`${el.isDone ? classes.isDone : ""}`}
-                          disablePadding
-                          divider
-                          sx={{pl: "16px"}}
-                >
-
-                    <Checkbox onChange={onChangeHandler}
-                              checked={el.isDone}
-                    />
-                    <EditableSpan title={el.title} callBack={editableSpanCallBack}/>
-                    <IconButton onClick={removeTaskBtn}>
-                        <Delete/>
-                    </IconButton>
-                </ListItem>
+                <Tasks
+                    key={el.id}
+                    taskId={el.id}
+                    isDone={el.isDone}
+                    title={el.title}
+                    removeTask={props.removeTask}
+                    todoListId={props.todoListId}
+                    changeTaskStatus={props.changeTaskStatus}
+                    changeTaskTitle={props.changeTaskTitle}
+                />
             )
         }
     )
 
     const filterButtons = (val: FilterTasksType) => {
-        props.filterTasks(val, props.id)
+        props.filterTasks(val, props.todoListId)
     }
     //
 
     //Callback To addTask
     const addTask = useCallback((text: string) => {
-        props.addTask(text, props.id)
-    }, [props.addTask, props.id])
+        props.addTask(text, props.todoListId)
+    }, [props.addTask, props.todoListId])
 
     const changeToDoListTitleCallback = useCallback((toDoListTitle: string) => {
-        props.changeTodolistTitle(toDoListTitle, props.id)
-    }, [props.id])
+        props.changeTodolistTitle(toDoListTitle, props.todoListId)
+    }, [props.todoListId])
 
     return (
         <div>
             {/*Task Input*/}
-            <IconButton onClick={() => props.remoteTodoLost(props.id)}
+            <IconButton onClick={() => props.remoteTodoLost(props.todoListId)}
                         sx={{
                             margin: "0",
                             padding: "0",

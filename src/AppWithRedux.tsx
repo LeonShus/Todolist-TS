@@ -83,7 +83,7 @@ export const AppWithRedux = () => {
         return (
             <Grid item key={tl.id}>
                 <Paper sx={{padding: "10px 20px 20px 20px"}}>
-                    <TodoList id={tl.id}
+                    <TodoList todoListId={tl.id}
                               title={tl.title}
                               tasks={tasks[tl.id]}
                               addTask={addTask}
