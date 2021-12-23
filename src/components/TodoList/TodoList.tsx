@@ -1,10 +1,9 @@
-import React, {ChangeEvent, useCallback} from "react";
+import React, {useCallback} from "react";
 import {FilterTasksType, TasksType} from "../../AppWithRedux";
-import classes from "./TodoList.module.css"
 import {AddItemForm} from "../DefaultComponent/Input/AddItemForm";
 import {EditableSpan} from "../DefaultComponent/Span/EditableSpan";
-import {Button, ButtonGroup, Checkbox, IconButton, List, ListItem, Typography} from "@mui/material";
-import {Clear, Delete} from "@mui/icons-material";
+import {Button, ButtonGroup, IconButton, List} from "@mui/material";
+import {Clear} from "@mui/icons-material";
 import {Tasks} from "./Tasks/Tasks";
 
 
@@ -13,13 +12,10 @@ type TodoListPropsType = {
     title: string
     tasks: Array<TasksType>
     addTask: (title: string, todoListID: string) => void
-    removeTask: (tasksID: string, todoListID: string) => void
     filterTasks: (filter: FilterTasksType, todoListID: string) => void
-    changeTaskStatus: (id: string, isDone: boolean, todoListID: string) => void
     filter: FilterTasksType
     remoteTodoLost: (todoListID: string) => void
     changeTodolistTitle: (title: string, todoListID: string) => void
-    changeTaskTitle: (taskId: string, title: string, todoListID: string) => void
 }
 
 export const TodoList = React.memo((props: TodoListPropsType) => {
@@ -40,10 +36,7 @@ export const TodoList = React.memo((props: TodoListPropsType) => {
                     taskId={el.id}
                     isDone={el.isDone}
                     title={el.title}
-                    removeTask={props.removeTask}
                     todoListId={props.todoListId}
-                    changeTaskStatus={props.changeTaskStatus}
-                    changeTaskTitle={props.changeTaskTitle}
                 />
             )
         }

@@ -11,7 +11,7 @@ import {
     filterTodoListAC,
     removeTodoListAC
 } from "./todolistReducer/TodoListReducer";
-import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from "./todolistReducer/TaskReducer";
+import {addTaskAC} from "./todolistReducer/TaskReducer";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "./bll/store";
 
@@ -45,22 +45,10 @@ export const AppWithRedux = () => {
     const filterTasks = useCallback((filter: FilterTasksType, todoListID: string) => {
         dispatch(filterTodoListAC(filter, todoListID))
     }, [dispatch])
-    //Change Title of Task
-    const changeTaskTitle = useCallback((taskId: string, title: string, todoListID: string) => {
-        dispatch(changeTaskTitleAC(taskId, title, todoListID))
-    }, [dispatch])
-    //Change
-    const changeTaskStatus = useCallback((id: string, isDone: boolean, todoListID: string) => {
-        dispatch(changeTaskStatusAC(id, isDone, todoListID))
-    }, [dispatch])
     //AddTask
     const addTask = useCallback((title: string, todoListID: string) => {
         dispatch(addTaskAC(title, todoListID))
 
-    }, [dispatch])
-    //Delete Task
-    const removeTask = useCallback((tasksID: string, todoListID: string) => {
-        dispatch(removeTaskAC(tasksID, todoListID))
     }, [dispatch])
 
 
@@ -87,13 +75,11 @@ export const AppWithRedux = () => {
                               title={tl.title}
                               tasks={tasks[tl.id]}
                               addTask={addTask}
-                              removeTask={removeTask}
                               filterTasks={filterTasks}
-                              changeTaskStatus={changeTaskStatus}
                               filter={tl.filter}
                               remoteTodoLost={remoteTodoLost}
                               changeTodolistTitle={changeTodolistTitle}
-                              changeTaskTitle={changeTaskTitle}
+
                     />
                 </Paper>
             </Grid>
@@ -111,7 +97,7 @@ export const AppWithRedux = () => {
                     >
                         <Menu/>
                     </IconButton>
-                    <Typography variant="h6" component={'span'}>
+                    <Typography variant="h6" component={"span"}>
                         TodoLists
                     </Typography>
                     <Button color="inherit"

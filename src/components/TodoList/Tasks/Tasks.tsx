@@ -4,28 +4,25 @@ import classes from "../TodoList.module.css";
 import {EditableSpan} from "../../DefaultComponent/Span/EditableSpan";
 import {Delete} from "@mui/icons-material";
 import {useDispatch} from "react-redux";
-import {changeTaskStatusAC, removeTaskAC} from "../../../todolistReducer/TaskReducer";
+import {changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from "../../../todolistReducer/TaskReducer";
 
 type TasksPropsType = {
     taskId: string
     todoListId: string
     isDone: boolean
     title: string
-    changeTaskTitle: (taskId: string, title: string, todoListID: string) => void
-    changeTaskStatus: (id: string, isDone: boolean, todoListID: string) => void
-    removeTask: (tasksID: string, todoListID: string) => void
 }
 
 export const Tasks = (props: TasksPropsType) => {
 
     const dispatch = useDispatch()
-    const removeTaskBtn = () => dispatch(removeTaskAC(props.taskId, props.todoListId))
-    const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+
+    const removeTask = () => dispatch(removeTaskAC(props.taskId, props.todoListId))
+    const changeTaskStatus = (e: ChangeEvent<HTMLInputElement>) => {
         dispatch(changeTaskStatusAC(props.taskId, e.currentTarget.checked, props.todoListId))
     }
-
-    const editableSpanCallBack = (title: string) => {
-        props.changeTaskTitle(props.taskId, title, props.todoListId)
+    const changeTaskTitle = (title: string) => {
+        dispatch(changeTaskTitleAC(props.taskId, title, props.todoListId))
     }
     return (
         <ListItem key={props.taskId}
@@ -35,11 +32,11 @@ export const Tasks = (props: TasksPropsType) => {
                   sx={{pl: "16px"}}
         >
 
-            <Checkbox onChange={onChangeHandler}
+            <Checkbox onChange={changeTaskStatus}
                       checked={props.isDone}
             />
-            <EditableSpan title={props.title} callBack={editableSpanCallBack}/>
-            <IconButton onClick={removeTaskBtn}>
+            <EditableSpan title={props.title} callBack={changeTaskTitle}/>
+            <IconButton onClick={removeTask}>
                 <Delete/>
             </IconButton>
         </ListItem>
