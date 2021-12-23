@@ -21,10 +21,18 @@ type TodoListPropsType = {
     changeTaskTitle: (taskId: string, title: string, todoListID: string) => void
 }
 
-export const TodoList = (props: TodoListPropsType) => {
-
-    //Do Array of jsx Elements TASKS ITEMS
-    const arrayOfTasksLi = props.tasks.map(el => {
+export const TodoList = React.memo((props: TodoListPropsType) => {
+    console.log("TODOLIST")
+    //Filter tasks to UI
+    let tasksToRender = props.tasks
+    if (props.filter === "active") {
+        tasksToRender = props.tasks.filter(el => !el.isDone)
+    }
+    if (props.filter === "completed") {
+        tasksToRender = props.tasks.filter(el => el.isDone)
+    }
+    //Do Array of jsx Elements TASKS ITEM
+    const arrayOfTasksLi = tasksToRender.map(el => {
             const removeTaskBtn = () => props.removeTask(el.id, props.id)
             const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
                 return props.changeTaskStatus(el.id, e.currentTarget.checked, props.id)
@@ -60,11 +68,11 @@ export const TodoList = (props: TodoListPropsType) => {
     //Callback To addTask
     const addTask = useCallback((text: string) => {
         props.addTask(text, props.id)
-    },[props.addTask, props.id])
+    }, [props.addTask, props.id])
 
-    const changeToDoListTitleCallback = (toDoListTitle: string) => {
+    const changeToDoListTitleCallback = useCallback((toDoListTitle: string) => {
         props.changeTodolistTitle(toDoListTitle, props.id)
-    }
+    }, [props.id])
 
     return (
         <div>
@@ -79,9 +87,11 @@ export const TodoList = (props: TodoListPropsType) => {
             >
                 <Clear/>
             </IconButton>
-            <Typography sx={{fontWeight: "bold"}}>
+
+            <div>
                 <EditableSpan textStyle={"h6"} title={props.title} callBack={changeToDoListTitleCallback}/>
-            </Typography>
+            </div>
+
 
             <AddItemForm addItem={addTask}/>
 
@@ -114,5 +124,5 @@ export const TodoList = (props: TodoListPropsType) => {
             </div>
         </div>
     );
-}
+})
 
