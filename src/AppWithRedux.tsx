@@ -3,15 +3,9 @@ import "./App.css";
 import {TodoList} from "./components/TodoList/TodoList";
 import {v1} from "uuid";
 import {AddItemForm} from "./components/DefaultComponent/Input/AddItemForm";
-import {AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography} from "@mui/material";
+import {AppBar, Button, Container, Grid, IconButton, Toolbar, Typography} from "@mui/material";
 import {Menu} from "@mui/icons-material";
-import {
-    addTodolistAC,
-    changeTodoListTitleAC,
-    filterTodoListAC,
-    removeTodoListAC
-} from "./todolistReducer/TodoListReducer";
-import {addTaskAC} from "./todolistReducer/TaskReducer";
+import {addTodolistAC} from "./todolistReducer/TodoListReducer";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "./bll/store";
 
@@ -51,13 +45,11 @@ export const AppWithRedux = () => {
     const todoListsComponents = todoLists.map(tl => {
         return (
             <Grid item key={tl.id}>
-                <Paper sx={{padding: "10px 20px 20px 20px"}}>
-                    <TodoList todoListId={tl.id}
-                              title={tl.title}
-                              tasks={tasks[tl.id]}
-                              filter={tl.filter}
-                    />
-                </Paper>
+                <TodoList todoListId={tl.id}
+                          title={tl.title}
+                          tasks={tasks[tl.id]}
+                          filter={tl.filter}
+                />
             </Grid>
         )
     })

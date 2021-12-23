@@ -2,7 +2,7 @@ import React, {useCallback} from "react";
 import {FilterTasksType, TasksType} from "../../AppWithRedux";
 import {AddItemForm} from "../DefaultComponent/Input/AddItemForm";
 import {EditableSpan} from "../DefaultComponent/Span/EditableSpan";
-import {Button, ButtonGroup, IconButton, List} from "@mui/material";
+import {Button, ButtonGroup, IconButton, List, Paper} from "@mui/material";
 import {Clear} from "@mui/icons-material";
 import {Task} from "./Tasks/Tasks";
 import {useDispatch} from "react-redux";
@@ -48,21 +48,23 @@ export const TodoList = React.memo((props: TodoListPropsType) => {
         dispatch(filterTodoListAC(val, props.todoListId))
     }
     //Callback To addTask
-    const addTask = (text: string) => {
+    const addTask = useCallback((text: string) => {
         dispatch(addTaskAC(text, props.todoListId))
-    }
+    },[dispatch, props.todoListId])
 
     //TodoList Title Change
-    const changeTodoListTitle = (toDoListTitle: string) => {
+    const changeTodoListTitle = useCallback((toDoListTitle: string) => {
         dispatch(changeTodoListTitleAC(toDoListTitle, props.todoListId))
-    }
+    },[dispatch, props.todoListId])
 
+    //Remove TodoList
     const removeTodoList = () => {
         dispatch(removeTodoListAC(props.todoListId))
     }
 
     return (
-        <div>
+
+        <Paper sx={{padding: "10px 20px 20px 20px"}}>
             {/*Task Input*/}
             <IconButton onClick={removeTodoList}
                         sx={{
@@ -109,7 +111,8 @@ export const TodoList = React.memo((props: TodoListPropsType) => {
                     </Button>
                 </ButtonGroup>
             </div>
-        </div>
+        </Paper>
+
     );
 })
 
