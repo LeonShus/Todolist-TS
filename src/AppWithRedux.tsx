@@ -30,7 +30,7 @@ export type TasksStateType = {
 export const AppWithRedux = () => {
 
     const dispatch = useDispatch()
-
+    //Get data from state
     const todoLists = useSelector<AppRootStateType, Array<TodoListType>>(state => state.todoLists)
     const tasks = useSelector<AppRootStateType, TasksStateType>(state => state.tasks)
 
