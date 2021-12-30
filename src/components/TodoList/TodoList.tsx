@@ -4,7 +4,7 @@ import {AddItemForm} from "../DefaultComponent/Input/AddItemForm";
 import {EditableSpan} from "../DefaultComponent/Span/EditableSpan";
 import {IconButton, List, Paper} from "@mui/material";
 import {Clear} from "@mui/icons-material";
-import {Task} from "./Tasks/Tasks";
+import {Task} from "./Tasks/Task";
 import {useDispatch} from "react-redux";
 import {changeTodoListTitleAC, filterTodoListAC, removeTodoListAC} from "../../todolistReducer/TodoListReducer";
 import {addTaskAC} from "../../todolistReducer/TaskReducer";
