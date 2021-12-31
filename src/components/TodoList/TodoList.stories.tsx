@@ -2,22 +2,15 @@ import React from "react";
 import {ComponentMeta, ComponentStory} from "@storybook/react";
 
 import {TodoList} from "./TodoList";
-import {Provider} from "react-redux";
-import {store} from "../../bll/store";
+import {ReduxStoreProviderDecorator} from "../../ReduxStoreProviderDecorator";
 
 export default {
     title: "TODOLISTS/TodoList",
     component: TodoList,
+    decorators: [ReduxStoreProviderDecorator]
 } as ComponentMeta<typeof TodoList>;
 
-const Template: ComponentStory<typeof TodoList> = (args) => {
-    return (
-        <Provider store={store}>
-            <TodoList {...args} />
-        </Provider>
-
-    )
-}
+const Template: ComponentStory<typeof TodoList> = (args) => <TodoList {...args}/>
 
 export const TodoListStory = Template.bind({});
 TodoListStory.args = {
