@@ -1,5 +1,7 @@
 import React, {useEffect, useState} from "react"
 import {todolistApi} from "../api/todolistApi";
+import {AddItemForm} from "../components/DefaultComponent/Input/AddItemForm";
+
 
 export default {
     title: "API"
@@ -18,7 +20,7 @@ export const GetTodolists = () => {
 }
 export const CreateTodolist = () => {
     const [state, setState] = useState<any>(null)
-    let title = "FFFFF"
+    let title = "Fqwe"
     useEffect(() => {
         todolistApi.createTodolist(title)
             .then(res => {
@@ -30,7 +32,7 @@ export const CreateTodolist = () => {
 }
 export const DeleteTodolist = () => {
     const [state, setState] = useState<any>(null)
-    let todolistId = "429c952b-d0c7-40d4-9369-029bdc5cde8a"
+    let todolistId = "0dd33543-89e6-45e7-9e90-f7225e15860c"
 
     useEffect(() => {
         todolistApi.deleteTodolist(todolistId)
@@ -54,4 +56,57 @@ export const UpdateTodolistTitle = () => {
     }, [])
 
     return <div> {JSON.stringify(state)}</div>
+}
+
+export const CrudTodoLists = () => {
+
+    const addItem = (title: string) => {
+        todolistApi.createTodolist(title)
+            .then(res => {
+                console.log(res)
+                getTodos()
+            })
+    }
+    const deleteItem = (todolistId: string) => {
+        todolistApi.deleteTodolist(todolistId)
+            .then(res => {
+                console.log(res)
+                getTodos()
+            })
+    }
+
+    const changeTitle = (todolistId: string) => {
+        let title = "Changed"
+        todolistApi.updateTodolistTitle(todolistId, title)
+            .then((res) => {
+                console.log(res)
+                getTodos()
+            })
+    }
+
+    const getTodos = () => {
+        todolistApi.getTodos()
+            .then((res) => {
+                setState(res.data);
+            })
+    }
+
+    const [state, setState] = useState<any>(null)
+    useEffect(() => {
+        getTodos()
+    }, [])
+
+    return (
+        <div>
+            add
+            <AddItemForm addItem={addItem}/>
+            delete
+            <AddItemForm addItem={deleteItem}/>
+            changeTitle
+            <AddItemForm addItem={changeTitle}/>
+            TodoLists
+            <div> {JSON.stringify(state)}</div>
+
+        </div>
+    )
 }
