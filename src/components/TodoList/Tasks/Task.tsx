@@ -1,4 +1,4 @@
-import React from "react"
+import React, {ChangeEvent} from "react"
 import {Checkbox, IconButton, ListItem} from "@mui/material";
 import classes from "../TodoList.module.css";
 import {EditableSpan} from "../../DefaultComponent/Span/EditableSpan";
@@ -19,11 +19,10 @@ export const Task = React.memo((props: TasksPropsType) => {
 
     const removeTask = () => dispatch(removeTaskAC(props.taskId, props.todoListId))
 
-    const changeTaskStatusToCompleted = () => {
-        dispatch(changeTaskStatusAC(props.taskId, TaskStatuses.Completed, props.todoListId))
-    }
-    const changeTaskStatusToNew = () => {
-        dispatch(changeTaskStatusAC(props.taskId, TaskStatuses.New, props.todoListId))
+    const changeTaskStatus = (e: ChangeEvent<HTMLInputElement>) => {
+        let checked = e.currentTarget.checked
+        let status = checked ? TaskStatuses.Completed : TaskStatuses.New
+        dispatch(changeTaskStatusAC(props.taskId, status, props.todoListId))
     }
 
     const changeTaskTitle = (title: string) => {
@@ -38,9 +37,7 @@ export const Task = React.memo((props: TasksPropsType) => {
                   sx={{pl: "16px"}}
         >
 
-            <Checkbox onChange={props.status === TaskStatuses.New
-                ? changeTaskStatusToCompleted
-                : changeTaskStatusToNew}
+            <Checkbox onChange={changeTaskStatus}
                       checked={props.status === TaskStatuses.Completed}
             />
             <EditableSpan title={props.title} callBack={changeTaskTitle}/>
