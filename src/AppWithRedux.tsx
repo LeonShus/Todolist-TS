@@ -4,24 +4,12 @@ import {TodoList} from "./components/TodoList/TodoList";
 import {v1} from "uuid";
 import {AddItemForm} from "./components/DefaultComponent/Input/AddItemForm";
 import {Container, Grid} from "@mui/material";
-import {addTodolistAC} from "./todolistReducer/TodoListReducer";
+import {addTodolistAC, TodoListType} from "./bll/reducers/TodoListReducer";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "./bll/store";
 import {Header} from "./components/Header/Header";
+import {TasksType} from "./bll/reducers/TaskReducer";
 
-export type TasksType = {
-    id: string
-    title: string
-    isDone: boolean
-}
-
-export type FilterTasksType = "all" | "active" | "completed"
-
-export type TodoListType = {
-    id: string
-    title: string
-    filter: FilterTasksType
-}
 
 export type TasksStateType = {
     [key: string]: Array<TasksType>

@@ -4,7 +4,7 @@ import classes from "../TodoList.module.css";
 import {EditableSpan} from "../../DefaultComponent/Span/EditableSpan";
 import {Delete} from "@mui/icons-material";
 import {useDispatch} from "react-redux";
-import {changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from "../../../todolistReducer/TaskReducer";
+import {changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from "../../../bll/reducers/TaskReducer";
 
 type TasksPropsType = {
     taskId: string

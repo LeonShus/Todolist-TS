@@ -1,6 +1,7 @@
 import React from "react";
 import {Button, ButtonGroup} from "@mui/material";
-import {FilterTasksType} from "../../../AppWithRedux";
+import {FilterTasksType} from "../../../bll/reducers/TodoListReducer";
+
 
 type ButtonFilterLine = {
     filter: FilterTasksType
