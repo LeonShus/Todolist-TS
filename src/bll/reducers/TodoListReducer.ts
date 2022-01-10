@@ -7,27 +7,32 @@ export const todoListId_03 = v1()
 
 export type ActionsType = RemoveTodoListAT | AddTodoListAT | ChangeTodoListTitleAT | FilterTodoListAT
 
-const initialState: Array<TodoListType> = [
-    {id: todoListId_01, title: "WantTo sell", filter: "all"},
-    {id: todoListId_02, title: "Want to buy", filter: "all"},
-    {id: todoListId_03, title: "Want to buy", filter: "all"},
+const initialState: Array<TodoListDomainType> = [
+    {id: todoListId_01, title: "WantTo sell", filter: "all", addedDate: "", order: 0},
+    {id: todoListId_02, title: "Want to buy", filter: "all", addedDate: "", order: 0},
+    {id: todoListId_03, title: "Want to buy", filter: "all", addedDate: "", order: 0},
 ]
+
 
 export type TodoListType = {
     id: string
     title: string
-    filter: FilterTasksType
+    addedDate: string
+    order: number
 }
 
 export type FilterTasksType = "all" | "active" | "completed"
 
+export type TodoListDomainType = TodoListType & {
+    filter: FilterTasksType
+}
 
-export const todoListReducer = (state: Array<TodoListType> = initialState, action: ActionsType): Array<TodoListType> => {
+export const todoListReducer = (state: Array<TodoListDomainType> = initialState, action: ActionsType): Array<TodoListDomainType> => {
     switch (action.type) {
         case "REMOVE-TODOLIST":
             return state.filter(tl => tl.id !== action.todoListId)
         case "ADD-TODOLIST":
-            const newTodoList: TodoListType = {id: action.todoListId, title: action.title, filter: "all"}
+            const newTodoList: TodoListDomainType = {id: action.todoListId, title: action.title, filter: "all", addedDate: "", order: 0}
             return [...state, newTodoList]
         case "CHANGE-TODOLIST-TITLE":
             return state.map(el => el.id === action.id ? {...el, title: action.title} : el)
