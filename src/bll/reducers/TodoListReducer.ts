@@ -3,7 +3,6 @@ import {v1} from "uuid";
 
 export const todoListId_01 = v1()
 export const todoListId_02 = v1()
-export const todoListId_03 = v1()
 
 export type ActionsType = RemoveTodoListAT | AddTodoListAT | ChangeTodoListTitleAT | FilterTodoListAT
 
@@ -31,7 +30,13 @@ export const todoListReducer = (state: Array<TodoListDomainType> = initialState,
         case "REMOVE-TODOLIST":
             return state.filter(tl => tl.id !== action.todoListId)
         case "ADD-TODOLIST":
-            const newTodoList: TodoListDomainType = {id: action.todoListId, title: action.title, filter: "all", addedDate: "", order: 0}
+            const newTodoList: TodoListDomainType = {
+                id: action.todoListId,
+                title: action.title,
+                filter: "all",
+                addedDate: "",
+                order: 0
+            }
             return [...state, newTodoList]
         case "CHANGE-TODOLIST-TITLE":
             return state.map(el => el.id === action.id ? {...el, title: action.title} : el)

@@ -1,4 +1,4 @@
-import React, {ChangeEvent} from "react"
+import React from "react"
 import {Checkbox, IconButton, ListItem} from "@mui/material";
 import classes from "../TodoList.module.css";
 import {EditableSpan} from "../../DefaultComponent/Span/EditableSpan";
@@ -19,10 +19,10 @@ export const Task = React.memo((props: TasksPropsType) => {
 
     const removeTask = () => dispatch(removeTaskAC(props.taskId, props.todoListId))
 
-    const changeTaskStatusToCompleted = (e: ChangeEvent<HTMLInputElement>) => {
+    const changeTaskStatusToCompleted = () => {
         dispatch(changeTaskStatusAC(props.taskId, TaskStatuses.Completed, props.todoListId))
     }
-    const changeTaskStatusToNew = (e: ChangeEvent<HTMLInputElement>) => {
+    const changeTaskStatusToNew = () => {
         dispatch(changeTaskStatusAC(props.taskId, TaskStatuses.New, props.todoListId))
     }
 
