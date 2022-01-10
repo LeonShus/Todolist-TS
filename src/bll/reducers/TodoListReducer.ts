@@ -10,7 +10,6 @@ export type ActionsType = RemoveTodoListAT | AddTodoListAT | ChangeTodoListTitle
 const initialState: Array<TodoListDomainType> = [
     {id: todoListId_01, title: "WantTo sell", filter: "all", addedDate: "", order: 0},
     {id: todoListId_02, title: "Want to buy", filter: "all", addedDate: "", order: 0},
-    {id: todoListId_03, title: "Want to buy", filter: "all", addedDate: "", order: 0},
 ]
 
 

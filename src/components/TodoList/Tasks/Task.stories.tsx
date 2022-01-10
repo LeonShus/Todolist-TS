@@ -1,9 +1,9 @@
 import React from "react";
 import {ComponentMeta, ComponentStory} from "@storybook/react";
-
 import {Task} from "./Task";
 import {Provider} from "react-redux";
 import {store} from "../../../bll/store";
+import {TaskStatuses} from "../../../bll/reducers/TaskReducer";
 
 export default {
     title: "TODOLISTS/Task",
@@ -24,5 +24,5 @@ TaskStory.args = {
     taskId: "1",
     title: "buy",
     todoListId: "2",
-    isDone: true
+    status: TaskStatuses.New
 }

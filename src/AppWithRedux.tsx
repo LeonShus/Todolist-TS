@@ -8,12 +8,8 @@ import {addTodolistAC, TodoListDomainType} from "./bll/reducers/TodoListReducer"
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "./bll/store";
 import {Header} from "./components/Header/Header";
-import {TasksType} from "./bll/reducers/TaskReducer";
+import {TasksStateType} from "./bll/reducers/TaskReducer";
 
-
-export type TasksStateType = {
-    [key: string]: Array<TasksType>
-}
 
 export const AppWithRedux = () => {
 
@@ -21,7 +17,6 @@ export const AppWithRedux = () => {
     //Get data from state
     const todoLists = useSelector<AppRootStateType, Array<TodoListDomainType>>(state => state.todoLists)
     const tasks = useSelector<AppRootStateType, TasksStateType>(state => state.tasks)
-
 
     //AddToDoList
     const addToDoList = useCallback((title: string) => {

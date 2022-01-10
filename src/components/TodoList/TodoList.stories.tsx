@@ -3,6 +3,9 @@ import {ComponentMeta, ComponentStory} from "@storybook/react";
 
 import {TodoList} from "./TodoList";
 import {ReduxStoreProviderDecorator} from "../../ReduxStoreProviderDecorator";
+import {v1} from "uuid";
+import {todoListId_01} from "../../bll/reducers/TodoListReducer";
+import {TaskPriorities, TaskStatuses} from "../../bll/reducers/TaskReducer";
 
 export default {
     title: "TODOLISTS/TodoList",
@@ -18,8 +21,15 @@ TodoListStory.args = {
     todoListId: "2",
     filter: "all",
     tasks: [
-        {id: "1", title: "CSS", isDone: false},
-        {id: "2", title: "JS", isDone: true},
-        {id: "3", title: "React", isDone: false}
+        {
+            id: v1(), title: "HTML", status: TaskStatuses.New, todoListId: todoListId_01,
+            completed: false, addedDate: "", deadline: "", description: "", startDate: "",
+            order: 0, priority: TaskPriorities.Low
+        },
+        {
+            id: v1(), title: "CSS", status: TaskStatuses.New, todoListId: todoListId_01,
+            completed: false, addedDate: "", deadline: "", description: "", startDate: "",
+            order: 0, priority: TaskPriorities.Low
+        },
     ]
 }

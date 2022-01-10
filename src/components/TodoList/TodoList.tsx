@@ -11,7 +11,7 @@ import {
     filterTodoListAC,
     removeTodoListAC
 } from "../../bll/reducers/TodoListReducer";
-import {addTaskAC, TasksType} from "../../bll/reducers/TaskReducer";
+import {addTaskAC, TaskStatuses, TasksType} from "../../bll/reducers/TaskReducer";
 import {ButtonFilterLine} from "../DefaultComponent/ButtonFilterLine/ButtonFilterLine";
 
 
@@ -30,10 +30,10 @@ export const TodoList = React.memo((props: TodoListPropsType) => {
     //Filter tasks
     let tasksToRender = props.tasks
     if (props.filter === "active") {
-        tasksToRender = props.tasks.filter(el => !el.isDone)
+        tasksToRender = props.tasks.filter(el => el.status === TaskStatuses.New)
     }
     if (props.filter === "completed") {
-        tasksToRender = props.tasks.filter(el => el.isDone)
+        tasksToRender = props.tasks.filter(el => el.status === TaskStatuses.Completed)
     }
     //Do Array of jsx Elements TASKS ITEM
     const arrayOfTasksLi = tasksToRender.map(el => {
@@ -41,7 +41,7 @@ export const TodoList = React.memo((props: TodoListPropsType) => {
                 <Task
                     key={el.id}
                     taskId={el.id}
-                    isDone={el.isDone}
+                    status={el.status}
                     title={el.title}
                     todoListId={props.todoListId}
                 />
