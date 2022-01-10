@@ -1,27 +1,28 @@
-import {ActionsType, todoListReducer} from "./TodoListReducer";
-import {v1} from "uuid";
-import {FilterTasksType, TodoListType} from "../../AppWithRedux";
+import {
+    ActionsType,
+    FilterTasksType, removeTodoListAC,
+    TodoListDomainType,
+    todoListId_01,
+    todoListId_02,
+    todoListReducer
+} from "./TodoListReducer";
 
-let todolistId1 = v1();
-let todolistId2 = v1()
-let startState: Array<TodoListType>
+let startState: Array<TodoListDomainType>
 
 beforeEach(() => {
-    todolistId1 = v1();
-    todolistId2 = v1();
 
     startState = [
-        {id: todolistId1, title: "What to learn", filter: "all"},
-        {id: todolistId2, title: "What to buy", filter: "all"},
+        {id: todoListId_01, title: "WantTo sell", filter: "all", addedDate: "", order: 0},
+        {id: todoListId_02, title: "Want to buy", filter: "all", addedDate: "", order: 0},
     ]
 })
 
 test("correct todolist should be removed", () => {
 
-    const endState = todoListReducer(startState, {type: "REMOVE-TODOLIST", todoListId: todolistId1})
+    const endState = todoListReducer(startState, removeTodoListAC(todoListId_01))
 
     expect(endState.length).toBe(1);
-    expect(endState[0].id).toBe(todolistId2);
+    expect(endState[0].id).toBe(todoListId_02);
 });
 
 
@@ -32,7 +33,7 @@ test("correct todolist should be added", () => {
     const endState = todoListReducer(startState, {
         type: "ADD-TODOLIST",
         title: newTodolistTitle,
-        todoListId: todolistId2
+        todoListId: todoListId_02
     })
 
     expect(endState.length).toBe(3);
@@ -45,13 +46,13 @@ test("correct todolist should change its name", () => {
 
     const action: ActionsType = {
         type: "CHANGE-TODOLIST-TITLE",
-        id: todolistId2,
+        id: todoListId_02,
         title: newTodolistTitle
     };
 
     const endState = todoListReducer(startState, action);
 
-    expect(endState[0].title).toBe("What to learn");
+    expect(endState[0].title).toBe("WantTo sell");
     expect(endState[1].title).toBe(newTodolistTitle);
 });
 
@@ -61,7 +62,7 @@ test("correct filter of todolist should be changed", () => {
 
     const action: ActionsType = {
         type: "CHANGE-TODOLIST-FILTER",
-        id: todolistId2,
+        id: todoListId_02,
         filter: newFilter
     };
 
