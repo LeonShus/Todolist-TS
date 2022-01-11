@@ -7,6 +7,7 @@ export default {
     title: "API"
 }
 
+//TODOLIST
 export const GetTodolists = () => {
     const [state, setState] = useState<any>(null)
     useEffect(() => {
@@ -57,7 +58,41 @@ export const UpdateTodolistTitle = () => {
 
     return <div> {JSON.stringify(state)}</div>
 }
+//TASKS
+export const getTasksFromTodos = () => {
+    const [state, setState] = useState<any>(null)
+    let todolistId = "7d0aeacb-947a-4175-beb8-2eb5a22629ee"
 
+    useEffect(() => {
+        todolistApi.getTasks(todolistId)
+            .then(res => {
+                console.log(res.data.items)
+                setState(res.data)
+            })
+    }, [])
+
+    return <div> {JSON.stringify(state)}</div>
+}
+
+export const createTaskFromTodos = () => {
+    const [state, setState] = useState<any>(null)
+    let todolistId = "7d0aeacb-947a-4175-beb8-2eb5a22629ee"
+    let title = 'QQQ'
+
+    useEffect(() => {
+        todolistApi.createTask(todolistId, title)
+            .then(res => {
+                console.log(res.data.items)
+                setState(res.data)
+            })
+    }, [])
+
+    return <div> {JSON.stringify(state)}</div>
+}
+
+
+
+//Full Test
 export const CrudTodoLists = () => {
 
     const addItem = (title: string) => {
