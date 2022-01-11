@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react"
-import {todolistApi} from "../api/todolistApi";
+import {todolistApi, UpdateTaskParamType} from "../api/todolistApi";
 import {AddItemForm} from "../components/DefaultComponent/Input/AddItemForm";
+import {TaskPriorities, TaskStatuses} from "../bll/reducers/TaskReducer";
 
 
 export default {
@@ -74,15 +75,15 @@ export const getTasksFromTodos = () => {
     return <div> {JSON.stringify(state)}</div>
 }
 
-export const createTaskFromTodos = () => {
+export const createTask = () => {
     const [state, setState] = useState<any>(null)
     let todolistId = "7d0aeacb-947a-4175-beb8-2eb5a22629ee"
-    let title = 'QQQ'
+    let title = "QQQ"
 
     useEffect(() => {
         todolistApi.createTask(todolistId, title)
             .then(res => {
-                console.log(res.data.items)
+                console.log(res.data)
                 setState(res.data)
             })
     }, [])
@@ -90,6 +91,41 @@ export const createTaskFromTodos = () => {
     return <div> {JSON.stringify(state)}</div>
 }
 
+export const deleteTask = () => {
+    const [state, setState] = useState<any>(null)
+    let todolistId = "7d0aeacb-947a-4175-beb8-2eb5a22629ee"
+    let taskId = "827a0e83-ad4c-44e2-af14-58bb8a960dc6"
+
+    useEffect(() => {
+        todolistApi.deleteTask(todolistId, taskId)
+            .then(res => {
+                console.log(res.data)
+                setState(res.data)
+            })
+    }, [])
+
+    return <div> {JSON.stringify(state)}</div>
+}
+
+export const updateTask = () => {
+    const [state, setState] = useState<any>(null)
+    let todolistId = "7d0aeacb-947a-4175-beb8-2eb5a22629ee"
+    let taskId = "7fe9727f-bbbe-447e-bea1-48bbc68fb327"
+    let changedTask: UpdateTaskParamType = {
+        title: "WTT", startDate: "", status: TaskStatuses.Completed,
+        completed: false, deadline: "", description: '', priority: TaskPriorities.Low
+    }
+
+    useEffect(() => {
+        todolistApi.upgradeTask(todolistId, taskId, changedTask)
+            .then(res => {
+                console.log(res.data)
+                setState(res.data)
+            })
+    }, [])
+
+    return <div> {JSON.stringify(state)}</div>
+}
 
 
 //Full Test
