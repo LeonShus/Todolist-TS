@@ -1,5 +1,5 @@
 import {v1} from "uuid";
-import {AddTodoListAT, RemoveTodoListAT, todoListId_01, todoListId_02,} from "./TodoListReducer";
+import {AddTodoListAT, RemoveTodoListAT, SetTodoListsAT, todoListId_01, todoListId_02,} from "./TodoListReducer";
 
 export enum TaskStatuses {
     New = 0,
@@ -41,6 +41,7 @@ export type ActionsType =
     | ChangeTaskTitleAT
     | AddTodoListAT
     | RemoveTodoListAT
+    | SetTodoListsAT
 
 const initialState: TasksStateType = {
     [todoListId_01]:
@@ -132,6 +133,12 @@ export const tasksReducer = (state: TasksStateType = initialState, action: Actio
             const stateCopy = {...state}
             delete stateCopy[action.todoListId]
             return stateCopy
+        case "SET-TODOLISTS":
+            const copyState = {...state}
+            action.todos.forEach(el => {
+                copyState[el.id] = []
+            })
+            return copyState
         default:
             return state
     }

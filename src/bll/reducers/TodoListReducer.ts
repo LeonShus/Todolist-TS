@@ -1,4 +1,3 @@
-// import {FilterTasksType} from "../../AppWithRedux";
 import {v1} from "uuid";
 
 export const todoListId_01 = v1()
@@ -43,10 +42,11 @@ export const todoListReducer = (state: Array<TodoListDomainType> = initialState,
         case "CHANGE-TODOLIST-FILTER":
             return state.map(el => el.id === action.id ? {...el, filter: action.filter} : el)
         case "SET-TODOLISTS":
-            return {
+            let todos : TodoListDomainType[] = action.todos.map(el => ({...el, filter: "all"}))
+            return [
                 ...state,
-                ...action.todos
-            }
+                ...todos
+            ]
         default:
             return state
     }
@@ -87,8 +87,8 @@ export const filterTodoListAC = (filter: FilterTasksType, id: string) => {
     } as const
 }
 
-type SetTodoListsAT = ReturnType<typeof setTodoListsAC>
-export const setTodoListsAC = (todos: TodoListType) => {
+export type SetTodoListsAT = ReturnType<typeof setTodoListsAC>
+export const setTodoListsAC = (todos: TodoListType[]) => {
     return {
         type: 'SET-TODOLISTS',
         todos
