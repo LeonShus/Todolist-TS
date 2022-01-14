@@ -4,7 +4,7 @@ import classes from "../TodoList.module.css";
 import {EditableSpan} from "../../DefaultComponent/Span/EditableSpan";
 import {Delete} from "@mui/icons-material";
 import {useDispatch} from "react-redux";
-import {changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, TaskStatuses} from "../../../bll/reducers/TaskReducer";
+import {changeTaskStatusAC, changeTaskTitleAC, deleteTaskTC, TaskStatuses} from "../../../bll/reducers/TaskReducer";
 
 type TasksPropsType = {
     taskId: string
@@ -17,7 +17,7 @@ export const Task = React.memo((props: TasksPropsType) => {
 
     const dispatch = useDispatch()
 
-    const removeTask = () => dispatch(removeTaskAC(props.taskId, props.todoListId))
+    const removeTask = () => dispatch(deleteTaskTC(props.todoListId, props.taskId))
 
     const changeTaskStatus = (e: ChangeEvent<HTMLInputElement>) => {
         let checked = e.currentTarget.checked

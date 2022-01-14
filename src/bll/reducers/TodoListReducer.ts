@@ -93,7 +93,6 @@ export const setTodoListsAC = (todos: TodoListType[]) => {
 export const setTodosTC = () => (dispatch: any) => {
     todolistApi.getTodos()
         .then(res => {
-            console.log(res.data, "Thunk GET TODOS")
             dispatch(setTodoListsAC(res.data))
         })
 }
@@ -101,7 +100,6 @@ export const setTodosTC = () => (dispatch: any) => {
 export const createTodosTC = (title: string) => (dispatch: Dispatch) => {
     todolistApi.createTodolist(title)
         .then(res => {
-            console.log(res, "THUNK CREATE TODOS")
             dispatch(addTodolistAC(res.data.data.item))
         })
 }
@@ -109,7 +107,6 @@ export const createTodosTC = (title: string) => (dispatch: Dispatch) => {
 export const deleteTodosTC = (todolistId: string) => (dispatch: Dispatch) => {
     todolistApi.deleteTodolist(todolistId)
         .then(res => {
-            console.log(res, 'THUNK DELETE TODOS')
             dispatch(removeTodoListAC(todolistId))
         })
 }
@@ -117,7 +114,7 @@ export const deleteTodosTC = (todolistId: string) => (dispatch: Dispatch) => {
 export const changeTodosTitleTC = (todolistId: string, title: string) => (dispatch: Dispatch) => {
     todolistApi.updateTodolistTitle(todolistId, title)
         .then(res => {
-            console.log(res, 'THUNK UPDATE TITLE TODOS')
             dispatch(changeTodoListTitleAC(todolistId, title))
         })
 }
+

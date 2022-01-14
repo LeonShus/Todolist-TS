@@ -37,7 +37,7 @@ export const AppWithRedux = () => {
 
     useEffect(() => {
         dispatch(setTodosTC())
-    }, [])
+    }, [dispatch])
 
 
     return (

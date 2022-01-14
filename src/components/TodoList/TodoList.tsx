@@ -11,7 +11,7 @@ import {
     FilterTasksType,
     filterTodoListAC,
 } from "../../bll/reducers/TodoListReducer";
-import {addTaskAC, setTasksTC, TaskStatuses, TasksType} from "../../bll/reducers/TaskReducer";
+import {createTaskTC, setTasksTC, TaskStatuses, TasksType} from "../../bll/reducers/TaskReducer";
 import {ButtonFilterLine} from "../DefaultComponent/ButtonFilterLine/ButtonFilterLine";
 
 
@@ -57,14 +57,15 @@ export const TodoList = React.memo((props: TodoListPropsType) => {
         dispatch(filterTodoListAC(val, props.todoListId))
     }, [dispatch, props.todoListId])
     //Callback To addTask
-    const addTask = useCallback((text: string) => {
-        dispatch(addTaskAC(text, props.todoListId))
+    const addTask = useCallback((title: string) => {
+        // dispatch(addTaskAC(text, props.todoListId))
+        dispatch(createTaskTC(props.todoListId, title))
     }, [dispatch, props.todoListId])
 
     //TodoList Title Change
     const changeTodoListTitle = useCallback((title: string) => {
         dispatch(changeTodosTitleTC(props.todoListId, title))
-    }, [dispatch])
+    }, [dispatch, props.todoListId])
 
     //Remove TodoList
     const removeTodoList = () => {
