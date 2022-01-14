@@ -4,7 +4,13 @@ import {TodoList} from "./components/TodoList/TodoList";
 import {v1} from "uuid";
 import {AddItemForm} from "./components/DefaultComponent/Input/AddItemForm";
 import {Container, Grid} from "@mui/material";
-import {addTodolistAC, setTodoListsAC, TodoListDomainType, todoListId_02} from "./bll/reducers/TodoListReducer";
+import {
+    addTodolistAC,
+    setTodoListsAC,
+    setTodosTC,
+    TodoListDomainType,
+    todoListId_02
+} from "./bll/reducers/TodoListReducer";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "./bll/store";
 import {Header} from "./components/Header/Header";
@@ -39,11 +45,7 @@ export const AppWithRedux = () => {
     })
 
     useEffect(() => {
-        todolistApi.getTodos()
-            .then(res => {
-                console.log(res.data)
-                dispatch(setTodoListsAC(res.data))
-            })
+        dispatch(setTodosTC())
     },[])
 
 
