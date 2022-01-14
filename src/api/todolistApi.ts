@@ -1,5 +1,5 @@
 import axios from "axios";
-import {todoListId_02, TodoListType} from "../bll/reducers/TodoListReducer";
+import {TodoListType} from "../bll/reducers/TodoListReducer";
 import {TaskPriorities, TaskStatuses, TasksType} from "../bll/reducers/TaskReducer";
 
 const instance = axios.create({
@@ -9,13 +9,13 @@ const instance = axios.create({
         "API-KEY": "099be23b-024b-4d04-8aea-ded1a22de046"
     }
 })
-    export const todolistApi = {
+export const todolistApi = {
     //Todos
     getTodos() {
         return instance.get<Array<TodoListType>>("todo-lists",)
     },
     createTodolist(title: string) {
-        return instance.post<ResponseType<{item: TodoListType}>>("todo-lists", {title})
+        return instance.post<ResponseType<{ item: TodoListType }>>("todo-lists", {title})
     },
     deleteTodolist(todolistId: string) {
         return instance.delete<ResponseType<{}>>(`todo-lists/${todolistId}`)
@@ -24,16 +24,16 @@ const instance = axios.create({
         return instance.put<ResponseType<{}>>(`todo-lists/${todolistId}`, {title})
     },
     //Tasks
-    getTasks(todolistId: string){
+    getTasks(todolistId: string) {
         return instance.get<TasksResponseType<Array<TasksType>>>(`todo-lists/${todolistId}/tasks`)
     },
-    createTask(todolistId: string, title: string){
+    createTask(todolistId: string, title: string) {
         return instance.post<ResponseType<TasksType>>(`todo-lists/${todolistId}/tasks`, {title})
     },
-    deleteTask(todolistId: string, taskId: string){
+    deleteTask(todolistId: string, taskId: string) {
         return instance.delete<ResponseType<{}>>(`todo-lists/${todolistId}/tasks/${taskId}`)
     },
-    upgradeTask(todolistId: string, taskId: string, prop: UpdateTaskParamType){
+    upgradeTask(todolistId: string, taskId: string, prop: UpdateTaskParamType) {
         return instance.put<ResponseType<TasksType>>(`todo-lists/${todolistId}/tasks/${taskId}`, prop)
     }
 }

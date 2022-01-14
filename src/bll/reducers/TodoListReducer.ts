@@ -28,14 +28,14 @@ export const todoListReducer = (state: Array<TodoListDomainType> = initialState,
         case "REMOVE-TODOLIST":
             return state.filter(tl => tl.id !== action.todoListId)
         case "ADD-TODOLIST":
-            let newTodoList : TodoListDomainType = {...action.todos, filter: 'all'}
+            let newTodoList: TodoListDomainType = {...action.todos, filter: "all"}
             return [newTodoList, ...state]
         case "CHANGE-TODOLIST-TITLE":
             return state.map(el => el.id === action.id ? {...el, title: action.title} : el)
         case "CHANGE-TODOLIST-FILTER":
             return state.map(el => el.id === action.id ? {...el, filter: action.filter} : el)
         case "SET-TODOLISTS":
-            let todos : TodoListDomainType[] = action.todos.map(el => ({...el, filter: "all"}))
+            let todos: TodoListDomainType[] = action.todos.map(el => ({...el, filter: "all"}))
             return [
                 ...state,
                 ...todos
@@ -82,7 +82,7 @@ export const filterTodoListAC = (filter: FilterTasksType, id: string) => {
 export type SetTodoListsAT = ReturnType<typeof setTodoListsAC>
 export const setTodoListsAC = (todos: TodoListType[]) => {
     return {
-        type: 'SET-TODOLISTS',
+        type: "SET-TODOLISTS",
         todos
     } as const
 }
@@ -93,7 +93,7 @@ export const setTodoListsAC = (todos: TodoListType[]) => {
 export const setTodosTC = () => (dispatch: any) => {
     todolistApi.getTodos()
         .then(res => {
-            console.log(res.data, 'Thunk GET TODOS')
+            console.log(res.data, "Thunk GET TODOS")
             dispatch(setTodoListsAC(res.data))
         })
 }
@@ -103,5 +103,13 @@ export const createTodosTC = (title: string) => (dispatch: Dispatch) => {
         .then(res => {
             console.log(res, "THUNK CREATE TODOS")
             dispatch(addTodolistAC(res.data.data.item))
+        })
+}
+
+export const deleteTodosTC = (todolistId: string) => (dispatch: Dispatch) => {
+    todolistApi.deleteTodolist(todolistId)
+        .then(res => {
+            console.log(res, 'THUNK DELETE TODOS')
+            dispatch(removeTodoListAC(todolistId))
         })
 }

@@ -6,7 +6,7 @@ import {Clear} from "@mui/icons-material";
 import {Task} from "./Tasks/Task";
 import {useDispatch} from "react-redux";
 import {
-    changeTodoListTitleAC,
+    changeTodoListTitleAC, deleteTodosTC,
     FilterTasksType,
     filterTodoListAC,
     removeTodoListAC
@@ -64,7 +64,8 @@ export const TodoList = React.memo((props: TodoListPropsType) => {
 
     //Remove TodoList
     const removeTodoList = () => {
-        dispatch(removeTodoListAC(props.todoListId))
+        // dispatch(removeTodoListAC(props.todoListId))
+        dispatch(deleteTodosTC(props.todoListId))
     }
 
     return (

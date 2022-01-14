@@ -20,8 +20,6 @@ export const AppWithRedux = () => {
 
     //AddToDoList
     const addToDoList = useCallback((title: string) => {
-        // const newId = v1()
-        // dispatch(addTodolistAC(title, newId))
         dispatch(createTodosTC(title))
     }, [dispatch])
 
