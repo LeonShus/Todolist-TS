@@ -31,7 +31,7 @@ export const todoListReducer = (state: Array<TodoListDomainType> = initialState,
             let newTodoList: TodoListDomainType = {...action.todos, filter: "all"}
             return [newTodoList, ...state]
         case "CHANGE-TODOLIST-TITLE":
-            return state.map(el => el.id === action.id ? {...el, title: action.title} : el)
+            return state.map(el => el.id === action.todolistId ? {...el, title: action.title} : el)
         case "CHANGE-TODOLIST-FILTER":
             return state.map(el => el.id === action.id ? {...el, filter: action.filter} : el)
         case "SET-TODOLISTS":
@@ -62,11 +62,11 @@ export const addTodolistAC = (todos: TodoListType) => {
 }
 
 type ChangeTodoListTitleAT = ReturnType<typeof changeTodoListTitleAC>
-export const changeTodoListTitleAC = (title: string, id: string) => {
+export const changeTodoListTitleAC = (todolistId: string, title: string) => {
     return {
         type: "CHANGE-TODOLIST-TITLE",
         title,
-        id
+        todolistId
     } as const
 }
 
@@ -111,5 +111,13 @@ export const deleteTodosTC = (todolistId: string) => (dispatch: Dispatch) => {
         .then(res => {
             console.log(res, 'THUNK DELETE TODOS')
             dispatch(removeTodoListAC(todolistId))
+        })
+}
+
+export const changeTodosTitleTC = (todolistId: string, title: string) => (dispatch: Dispatch) => {
+    todolistApi.updateTodolistTitle(todolistId, title)
+        .then(res => {
+            console.log(res, 'THUNK UPDATE TITLE TODOS')
+            dispatch(changeTodoListTitleAC(todolistId, title))
         })
 }

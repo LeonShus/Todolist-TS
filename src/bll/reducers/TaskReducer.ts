@@ -43,54 +43,7 @@ export type ActionsType =
     | RemoveTodoListAT
     | SetTodoListsAT
 
-const initialState: TasksStateType = {
-    [todoListId_01]:
-        [
-            {
-                id: v1(), title: "HTML", status: TaskStatuses.New, todoListId: todoListId_01,
-                completed: false, addedDate: "", deadline: "", description: "", startDate: "",
-                order: 0, priority: TaskPriorities.Low
-            },
-            {
-                id: v1(), title: "CSS", status: TaskStatuses.New, todoListId: todoListId_01,
-                completed: false, addedDate: "", deadline: "", description: "", startDate: "",
-                order: 0, priority: TaskPriorities.Low
-            },
-            {
-                id: v1(), title: "bib", status: TaskStatuses.New, todoListId: todoListId_01,
-                completed: false, addedDate: "", deadline: "", description: "", startDate: "",
-                order: 0, priority: TaskPriorities.Low
-            },
-            {
-                id: v1(), title: "bob", status: TaskStatuses.New, todoListId: todoListId_01,
-                completed: false, addedDate: "", deadline: "", description: "", startDate: "",
-                order: 0, priority: TaskPriorities.Low
-            },
-        ],
-    [todoListId_02]:
-        [
-            {
-                id: v1(), title: "asd", status: TaskStatuses.New, todoListId: todoListId_02,
-                completed: false, addedDate: "", deadline: "", description: "", startDate: "",
-                order: 0, priority: TaskPriorities.Low
-            },
-            {
-                id: v1(), title: "qqqq", status: TaskStatuses.New, todoListId: todoListId_02,
-                completed: false, addedDate: "", deadline: "", description: "", startDate: "",
-                order: 0, priority: TaskPriorities.Low
-            },
-            {
-                id: v1(), title: "biasd", status: TaskStatuses.New, todoListId: todoListId_02,
-                completed: false, addedDate: "", deadline: "", description: "", startDate: "",
-                order: 0, priority: TaskPriorities.Low
-            },
-            {
-                id: v1(), title: "boasd", status: TaskStatuses.New, todoListId: todoListId_02,
-                completed: false, addedDate: "", deadline: "", description: "", startDate: "",
-                order: 0, priority: TaskPriorities.Low
-            },
-        ],
-}
+const initialState: TasksStateType = {}
 
 export const tasksReducer = (state: TasksStateType = initialState, action: ActionsType): TasksStateType => {
     switch (action.type) {
@@ -181,3 +134,6 @@ export const changeTaskTitleAC = (taskId: string, title: string, todoListId: str
         todoListId
     } as const
 }
+
+//THUNK
+

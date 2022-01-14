@@ -6,10 +6,10 @@ import {Clear} from "@mui/icons-material";
 import {Task} from "./Tasks/Task";
 import {useDispatch} from "react-redux";
 import {
-    changeTodoListTitleAC, deleteTodosTC,
+    changeTodoListTitleAC, changeTodosTitleTC,
+    deleteTodosTC,
     FilterTasksType,
-    filterTodoListAC,
-    removeTodoListAC
+    filterTodoListAC
 } from "../../bll/reducers/TodoListReducer";
 import {addTaskAC, TaskStatuses, TasksType} from "../../bll/reducers/TaskReducer";
 import {ButtonFilterLine} from "../DefaultComponent/ButtonFilterLine/ButtonFilterLine";
@@ -58,13 +58,12 @@ export const TodoList = React.memo((props: TodoListPropsType) => {
     }, [dispatch, props.todoListId])
 
     //TodoList Title Change
-    const changeTodoListTitle = useCallback((toDoListTitle: string) => {
-        dispatch(changeTodoListTitleAC(toDoListTitle, props.todoListId))
-    }, [dispatch, props.todoListId])
+    const changeTodoListTitle = useCallback((title: string) => {
+        dispatch(changeTodosTitleTC(props.todoListId, title))
+    }, [dispatch])
 
     //Remove TodoList
     const removeTodoList = () => {
-        // dispatch(removeTodoListAC(props.todoListId))
         dispatch(deleteTodosTC(props.todoListId))
     }
 
