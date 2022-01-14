@@ -1,10 +1,9 @@
 import React, {useCallback, useEffect} from "react";
 import "./App.css";
 import {TodoList} from "./components/TodoList/TodoList";
-import {v1} from "uuid";
 import {AddItemForm} from "./components/DefaultComponent/Input/AddItemForm";
 import {Container, Grid} from "@mui/material";
-import {addTodolistAC, createTodosTC, setTodosTC, TodoListDomainType} from "./bll/reducers/TodoListReducer";
+import {createTodosTC, setTodosTC, TodoListDomainType} from "./bll/reducers/TodoListReducer";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "./bll/store";
 import {Header} from "./components/Header/Header";

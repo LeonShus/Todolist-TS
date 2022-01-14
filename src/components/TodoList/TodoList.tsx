@@ -1,4 +1,4 @@
-import React, {useCallback} from "react";
+import React, {useCallback, useEffect} from "react";
 import {AddItemForm} from "../DefaultComponent/Input/AddItemForm";
 import {EditableSpan} from "../DefaultComponent/Span/EditableSpan";
 import {IconButton, List, Paper} from "@mui/material";
@@ -6,12 +6,12 @@ import {Clear} from "@mui/icons-material";
 import {Task} from "./Tasks/Task";
 import {useDispatch} from "react-redux";
 import {
-    changeTodoListTitleAC, changeTodosTitleTC,
+    changeTodosTitleTC,
     deleteTodosTC,
     FilterTasksType,
-    filterTodoListAC
+    filterTodoListAC,
 } from "../../bll/reducers/TodoListReducer";
-import {addTaskAC, TaskStatuses, TasksType} from "../../bll/reducers/TaskReducer";
+import {addTaskAC, setTasksTC, TaskStatuses, TasksType} from "../../bll/reducers/TaskReducer";
 import {ButtonFilterLine} from "../DefaultComponent/ButtonFilterLine/ButtonFilterLine";
 
 
@@ -26,6 +26,10 @@ export const TodoList = React.memo((props: TodoListPropsType) => {
     console.log("TODOLIST")
 
     const dispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch(setTasksTC(props.todoListId))
+    }, [dispatch, props.todoListId])
 
     //Filter tasks
     let tasksToRender = props.tasks
