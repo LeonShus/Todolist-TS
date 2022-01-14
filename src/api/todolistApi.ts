@@ -1,5 +1,5 @@
 import axios from "axios";
-import {TodoListType} from "../bll/reducers/TodoListReducer";
+import {todoListId_02, TodoListType} from "../bll/reducers/TodoListReducer";
 import {TaskPriorities, TaskStatuses, TasksType} from "../bll/reducers/TaskReducer";
 
 const instance = axios.create({
@@ -9,8 +9,7 @@ const instance = axios.create({
         "API-KEY": "099be23b-024b-4d04-8aea-ded1a22de046"
     }
 })
-
-export const todolistApi = {
+    export const todolistApi = {
     //Todos
     getTodos() {
         return instance.get<Array<TodoListType>>("todo-lists",)

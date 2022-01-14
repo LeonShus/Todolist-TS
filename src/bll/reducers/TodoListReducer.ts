@@ -7,10 +7,7 @@ export const todoListId_02 = v1()
 
 export type ActionsType = RemoveTodoListAT | AddTodoListAT | ChangeTodoListTitleAT | FilterTodoListAT | SetTodoListsAT
 
-const initialState: Array<TodoListDomainType> = [
-    {id: todoListId_01, title: "WantTo sell", filter: "all", addedDate: "", order: 0},
-    {id: todoListId_02, title: "Want to buy", filter: "all", addedDate: "", order: 0},
-]
+const initialState: Array<TodoListDomainType> = []
 
 
 export type TodoListType = {
@@ -31,14 +28,8 @@ export const todoListReducer = (state: Array<TodoListDomainType> = initialState,
         case "REMOVE-TODOLIST":
             return state.filter(tl => tl.id !== action.todoListId)
         case "ADD-TODOLIST":
-            const newTodoList: TodoListDomainType = {
-                id: action.todoListId,
-                title: action.title,
-                filter: "all",
-                addedDate: "",
-                order: 0
-            }
-            return [...state, newTodoList]
+            let newTodoList : TodoListDomainType = {...action.todos, filter: 'all'}
+            return [newTodoList, ...state]
         case "CHANGE-TODOLIST-TITLE":
             return state.map(el => el.id === action.id ? {...el, title: action.title} : el)
         case "CHANGE-TODOLIST-FILTER":
@@ -63,11 +54,10 @@ export const removeTodoListAC = (todoListId: string) => {
 }
 
 export type AddTodoListAT = ReturnType<typeof addTodolistAC>
-export const addTodolistAC = (title: string, todoListId: string) => {
+export const addTodolistAC = (todos: TodoListType) => {
     return {
         type: "ADD-TODOLIST",
-        title,
-        todoListId
+        todos,
     } as const
 }
 
@@ -103,7 +93,15 @@ export const setTodoListsAC = (todos: TodoListType[]) => {
 export const setTodosTC = () => (dispatch: any) => {
     todolistApi.getTodos()
         .then(res => {
-            console.log(res.data, 'Thunk')
+            console.log(res.data, 'Thunk GET TODOS')
             dispatch(setTodoListsAC(res.data))
+        })
+}
+
+export const createTodosTC = (title: string) => (dispatch: Dispatch) => {
+    todolistApi.createTodolist(title)
+        .then(res => {
+            console.log(res, "THUNK CREATE TODOS")
+            dispatch(addTodolistAC(res.data.data.item))
         })
 }
