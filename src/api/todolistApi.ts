@@ -33,8 +33,8 @@ export const todolistApi = {
     deleteTask(todolistId: string, taskId: string) {
         return instance.delete<ResponseType<{}>>(`todo-lists/${todolistId}/tasks/${taskId}`)
     },
-    upgradeTask(todolistId: string, taskId: string, prop: UpdateTaskParamType) {
-        return instance.put<ResponseType<TasksType>>(`todo-lists/${todolistId}/tasks/${taskId}`, prop)
+    upgradeTask(todolistId: string, taskId: string, param: UpdateTaskParamType) {
+        return instance.put<ResponseType<{ item: TasksType}>>(`todo-lists/${todolistId}/tasks/${taskId}`, param)
     }
 }
 

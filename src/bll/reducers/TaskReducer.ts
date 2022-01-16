@@ -1,6 +1,6 @@
 import {AddTodoListAT, RemoveTodoListAT, SetTodoListsAT,} from "./TodoListReducer";
 import {Dispatch} from "redux";
-import {todolistApi} from "../../api/todolistApi";
+import {todolistApi, UpdateTaskParamType} from "../../api/todolistApi";
 
 export enum TaskStatuses {
     New = 0,
@@ -63,16 +63,11 @@ export const tasksReducer = (state: TasksStateType = initialState, action: Actio
                 ],
             }
         case "CHANGE-TASK-STATUS":
-            return {
-                ...state,
-                [action.todoListId]: state[action.todoListId]
-                    .map(el => el.id === action.taskId ? {...el, status: action.status} : el)
-            }
         case "CHANGE-TASK-TITLE":
             return {
                 ...state,
-                [action.todoListId]: state[action.todoListId]
-                    .map(el => el.id === action.taskId ? {...el, title: action.title} : el)
+                [action.task.todoListId]: state[action.task.todoListId]
+                    .map(el => el.id === action.task.id ? action.task : el)
             }
         case "ADD-TODOLIST":
             return {
@@ -118,22 +113,18 @@ export const addTaskAC = (todolistId: string, task: TasksType) => {
 }
 
 type ChangeTaskStatusAT = ReturnType<typeof changeTaskStatusAC>
-export const changeTaskStatusAC = (taskId: string, status: TaskStatuses, todoListId: string) => {
+export const changeTaskStatusAC = (task: TasksType) => {
     return {
         type: "CHANGE-TASK-STATUS",
-        taskId,
-        status,
-        todoListId
+        task
     } as const
 }
 
 type ChangeTaskTitleAT = ReturnType<typeof changeTaskTitleAC>
-export const changeTaskTitleAC = (taskId: string, title: string, todoListId: string) => {
+export const changeTaskTitleAC = (task: TasksType) => {
     return {
         type: "CHANGE-TASK-TITLE",
-        taskId,
-        title,
-        todoListId
+        task
     } as const
 }
 
@@ -168,5 +159,13 @@ export const deleteTaskTC = (todolistId: string, taskId: string) => (dispatch: D
         .then(res => {
             console.log(res)
             dispatch(removeTaskAC(todolistId, taskId))
+        })
+}
+
+export const upgradeTaskTC = (todolistId: string, taskId: string, param: UpdateTaskParamType) => (dispatch: Dispatch) => {
+    todolistApi.upgradeTask(todolistId, taskId, param)
+        .then(res => {
+            console.log(res)
+            dispatch(changeTaskTitleAC(res.data.data.item))
         })
 }

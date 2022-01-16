@@ -4,13 +4,15 @@ import classes from "../TodoList.module.css";
 import {EditableSpan} from "../../DefaultComponent/Span/EditableSpan";
 import {Delete} from "@mui/icons-material";
 import {useDispatch} from "react-redux";
-import {changeTaskStatusAC, changeTaskTitleAC, deleteTaskTC, TaskStatuses} from "../../../bll/reducers/TaskReducer";
+import {deleteTaskTC, TaskStatuses, upgradeTaskTC} from "../../../bll/reducers/TaskReducer";
+import {UpdateTaskParamType} from "../../../api/todolistApi";
 
 type TasksPropsType = {
     taskId: string
     todoListId: string
     status: TaskStatuses
     title: string
+    taskForUpdateParam: UpdateTaskParamType
 }
 
 export const Task = React.memo((props: TasksPropsType) => {
@@ -22,11 +24,11 @@ export const Task = React.memo((props: TasksPropsType) => {
     const changeTaskStatus = (e: ChangeEvent<HTMLInputElement>) => {
         let checked = e.currentTarget.checked
         let status = checked ? TaskStatuses.Completed : TaskStatuses.New
-        dispatch(changeTaskStatusAC(props.taskId, status, props.todoListId))
+        dispatch(upgradeTaskTC(props.todoListId, props.taskId, {...props.taskForUpdateParam, status}))
     }
 
     const changeTaskTitle = (title: string) => {
-        dispatch(changeTaskTitleAC(props.taskId, title, props.todoListId))
+        dispatch(upgradeTaskTC(props.todoListId, props.taskId, {...props.taskForUpdateParam, title}))
     }
     return (
         // Task

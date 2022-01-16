@@ -13,6 +13,7 @@ import {
 } from "../../bll/reducers/TodoListReducer";
 import {createTaskTC, setTasksTC, TaskStatuses, TasksType} from "../../bll/reducers/TaskReducer";
 import {ButtonFilterLine} from "../DefaultComponent/ButtonFilterLine/ButtonFilterLine";
+import {UpdateTaskParamType} from "../../api/todolistApi";
 
 
 type TodoListPropsType = {
@@ -41,6 +42,16 @@ export const TodoList = React.memo((props: TodoListPropsType) => {
     }
     //Do Array of jsx Elements TASKS ITEM
     const arrayOfTasksLi = tasksToRender.map(el => {
+            //Task Param to Update
+            let taskForUpdateParam: UpdateTaskParamType = {
+                title: el.title,
+                status: el.status,
+                priority: el.priority,
+                description: el.description,
+                deadline: el.deadline,
+                completed: el.completed,
+                startDate: el.startDate
+            }
             return (
                 <Task
                     key={el.id}
@@ -48,6 +59,7 @@ export const TodoList = React.memo((props: TodoListPropsType) => {
                     status={el.status}
                     title={el.title}
                     todoListId={props.todoListId}
+                    taskForUpdateParam={taskForUpdateParam}
                 />
             )
         }
