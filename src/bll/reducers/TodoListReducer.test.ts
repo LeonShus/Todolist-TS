@@ -1,6 +1,6 @@
 import {todoListId_01, todoListId_02} from "./TaskReducer.test";
 import {
-    ActionsType,
+    ActionsType, addTodolistAC, changeTodoListTitleAC,
     FilterTasksType, removeTodoListAC,
     TodoListDomainType,
     todoListReducer
@@ -27,32 +27,21 @@ test("correct todolist should be removed", () => {
 
 test("correct todolist should be added", () => {
 
-    let newTodolistTitle = "New Todolist";
+    let todo = {id: "3", title: "New Todolist", filter: "all", addedDate: "", order: 0}
 
-    const endState = todoListReducer(startState, {
-        type: "ADD-TODOLIST",
-        title: newTodolistTitle,
-        todoListId: todoListId_02
-    })
+    const endState = todoListReducer(startState, addTodolistAC(todo))
 
     expect(endState.length).toBe(3);
-    expect(endState[2].title).toBe(newTodolistTitle);
+    expect(endState[0].title).toBe("New Todolist");
 });
 
 
 test("correct todolist should change its name", () => {
-    let newTodolistTitle = "New Todolist";
 
-    const action: ActionsType = {
-        type: "CHANGE-TODOLIST-TITLE",
-        id: todoListId_02,
-        title: newTodolistTitle
-    };
-
-    const endState = todoListReducer(startState, action);
+    const endState = todoListReducer(startState, changeTodoListTitleAC(todoListId_02, "New Todolist title"))
 
     expect(endState[0].title).toBe("WantTo sell");
-    expect(endState[1].title).toBe(newTodolistTitle);
+    expect(endState[1].title).toBe("New Todolist title");
 });
 
 
