@@ -37,7 +37,7 @@ export type TasksStateType = {
 
 export type ActionsType =
     removeTaskAT
-    | addTaskACT
+    | addTaskAT
     | ChangeTaskStatusAT
     | ChangeTaskTitleAT
     | AddTodoListAT
@@ -103,7 +103,7 @@ export const removeTaskAC = (todoListId: string, taskId: string) => {
     } as const
 }
 
-type addTaskACT = ReturnType<typeof addTaskAC>
+type addTaskAT = ReturnType<typeof addTaskAC>
 export const addTaskAC = (todolistId: string, task: TasksType) => {
     return {
         type: "ADD-TASK",

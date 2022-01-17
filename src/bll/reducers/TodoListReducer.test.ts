@@ -1,9 +1,8 @@
+import {todoListId_01, todoListId_02} from "./TaskReducer.test";
 import {
     ActionsType,
     FilterTasksType, removeTodoListAC,
     TodoListDomainType,
-    todoListId_01,
-    todoListId_02,
     todoListReducer
 } from "./TodoListReducer";
 
