@@ -160,8 +160,12 @@ export const createTaskTC = (todolistId: string, title: string) => (dispatch: Di
                 dispatch(addTaskAC(todolistId, res.data.data.item))
                 dispatch(setLoadingBarStatusAC("idle"))
             } else {
-                dispatch(setErrorAC(res.data.messages[0]))
-                dispatch(setLoadingBarStatusAC("idle"))
+                if(res.data.messages.length){
+                    dispatch(setErrorAC(res.data.messages[0]))
+                } else {
+                    dispatch(setErrorAC('Some error occured'))
+                }
+                dispatch(setLoadingBarStatusAC("failed"))
             }
         })
 }
@@ -174,8 +178,12 @@ export const deleteTaskTC = (todolistId: string, taskId: string) => (dispatch: D
                 dispatch(removeTaskAC(todolistId, taskId))
                 dispatch(setLoadingBarStatusAC("idle"))
             } else {
-                dispatch(setErrorAC(res.data.messages[0]))
-                dispatch(setLoadingBarStatusAC("idle"))
+                if(res.data.messages.length){
+                    dispatch(setErrorAC(res.data.messages[0]))
+                } else {
+                    dispatch(setErrorAC('Some error occured'))
+                }
+                dispatch(setLoadingBarStatusAC("failed"))
             }
         })
 }
@@ -188,8 +196,12 @@ export const upgradeTaskTC = (todolistId: string, taskId: string, param: UpdateT
                 dispatch(changeTaskTitleAC(res.data.data.item))
                 dispatch(setLoadingBarStatusAC("idle"))
             } else {
-                dispatch(setErrorAC(res.data.messages[0]))
-                dispatch(setLoadingBarStatusAC("idle"))
+                if(res.data.messages.length){
+                    dispatch(setErrorAC(res.data.messages[0]))
+                } else {
+                    dispatch(setErrorAC('Some error occured'))
+                }
+                dispatch(setLoadingBarStatusAC("failed"))
             }
         })
 }
