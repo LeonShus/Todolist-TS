@@ -1,7 +1,7 @@
 import {AddTodoListAT, RemoveTodoListAT, SetTodoListsAT,} from "./TodoListReducer";
 import {Dispatch} from "redux";
 import {RequestResultCode, todolistApi, UpdateTaskParamType} from "../../api/todolistApi";
-import {setErrorAC, setLoadingBarStatusAC, SetLoadingBarStatusAT} from "./AppReducer";
+import {setErrorAC, setLoadingBarStatusAC} from "./AppReducer";
 
 export enum TaskStatuses {
     New = 0,

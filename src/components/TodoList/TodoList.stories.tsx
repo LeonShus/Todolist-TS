@@ -1,11 +1,10 @@
 import React from "react";
 import {ComponentMeta, ComponentStory} from "@storybook/react";
-
 import {TodoList} from "./TodoList";
 import {ReduxStoreProviderDecorator} from "../../ReduxStoreProviderDecorator";
 import {v1} from "uuid";
-import {todoListId_01} from "../../bll/reducers/TodoListReducer";
 import {TaskPriorities, TaskStatuses} from "../../bll/reducers/TaskReducer";
+import {todoListId_01, todoListId_02} from "../../bll/reducers/TaskReducer.test";
 
 export default {
     title: "TODOLISTS/TodoList",
@@ -27,7 +26,7 @@ TodoListStory.args = {
             order: 0, priority: TaskPriorities.Low
         },
         {
-            id: v1(), title: "CSS", status: TaskStatuses.New, todoListId: todoListId_01,
+            id: v1(), title: "CSS", status: TaskStatuses.New, todoListId: todoListId_02,
             completed: false, addedDate: "", deadline: "", description: "", startDate: "",
             order: 0, priority: TaskPriorities.Low
         },

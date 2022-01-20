@@ -1,10 +1,7 @@
-import {v1} from "uuid";
 import {Dispatch} from "redux";
-import {todolistApi} from "../../api/todolistApi";
-import {setLoadingBarStatusAC} from "./AppReducer";
+import {RequestResultCode, todolistApi} from "../../api/todolistApi";
+import {setErrorAC, setLoadingBarStatusAC} from "./AppReducer";
 
-export const todoListId_01 = v1()
-export const todoListId_02 = v1()
 
 export type ActionsType = RemoveTodoListAT | AddTodoListAT | ChangeTodoListTitleAT | FilterTodoListAT | SetTodoListsAT
 
@@ -105,10 +102,13 @@ export const createTodosTC = (title: string) => (dispatch: Dispatch) => {
     dispatch(setLoadingBarStatusAC("loading"))
     todolistApi.createTodolist(title)
         .then(res => {
-
-            dispatch(addTodolistAC(res.data.data.item))
-
-            dispatch(setLoadingBarStatusAC("idle"))
+            if (res.data.resultCode === RequestResultCode.complete) {
+                dispatch(addTodolistAC(res.data.data.item))
+                dispatch(setLoadingBarStatusAC("idle"))
+            } else {
+                dispatch(setErrorAC(res.data.messages[0]))
+                dispatch(setLoadingBarStatusAC("idle"))
+            }
         })
 }
 
@@ -116,9 +116,13 @@ export const deleteTodosTC = (todolistId: string) => (dispatch: Dispatch) => {
     dispatch(setLoadingBarStatusAC("loading"))
     todolistApi.deleteTodolist(todolistId)
         .then(res => {
-            dispatch(removeTodoListAC(todolistId))
-
-            dispatch(setLoadingBarStatusAC("idle"))
+            if (res.data.resultCode === RequestResultCode.complete) {
+                dispatch(removeTodoListAC(todolistId))
+                dispatch(setLoadingBarStatusAC("idle"))
+            } else {
+                dispatch(setErrorAC(res.data.messages[0]))
+                dispatch(setLoadingBarStatusAC("idle"))
+            }
         })
 }
 
@@ -126,9 +130,13 @@ export const changeTodosTitleTC = (todolistId: string, title: string) => (dispat
     dispatch(setLoadingBarStatusAC("loading"))
     todolistApi.updateTodolistTitle(todolistId, title)
         .then(res => {
-            dispatch(changeTodoListTitleAC(todolistId, title))
-
-            dispatch(setLoadingBarStatusAC("idle"))
+            if (res.data.resultCode === RequestResultCode.complete) {
+                dispatch(changeTodoListTitleAC(todolistId, title))
+                dispatch(setLoadingBarStatusAC("idle"))
+            } else {
+                dispatch(setErrorAC(res.data.messages[0]))
+                dispatch(setLoadingBarStatusAC("idle"))
+            }
         })
 }
 
