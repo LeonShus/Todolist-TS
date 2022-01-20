@@ -29,6 +29,7 @@ export const AppWithRedux = () => {
         return (
             <Grid item key={tl.id}>
                 <TodoList todoListId={tl.id}
+                          entityStatus={tl.entityStatus}
                           title={tl.title}
                           tasks={tasks[tl.id]}
                           filter={tl.filter}

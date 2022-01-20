@@ -14,6 +14,7 @@ import {
 import {createTaskTC, setTasksTC, TaskStatuses, TasksType} from "../../bll/reducers/TaskReducer";
 import {ButtonFilterLine} from "../DefaultComponent/ButtonFilterLine/ButtonFilterLine";
 import {UpdateTaskParamType} from "../../api/todolistApi";
+import {RequestStatusType} from "../../bll/reducers/AppReducer";
 
 
 type TodoListPropsType = {
@@ -21,6 +22,7 @@ type TodoListPropsType = {
     title: string
     tasks: Array<TasksType>
     filter: FilterTasksType
+    entityStatus: RequestStatusType
 }
 
 export const TodoList = React.memo((props: TodoListPropsType) => {
@@ -95,13 +97,14 @@ export const TodoList = React.memo((props: TodoListPropsType) => {
                             position: "relative",
                             left: "230px",
                         }}
+                        disabled={props.entityStatus === "loading"}
             >
                 <Clear/>
             </IconButton>
             {/*Title*/}
             <EditableSpan textStyle={"h6"} title={props.title} callBack={changeTodoListTitle}/>
 
-            <AddItemForm addItem={addTask}/>
+            <AddItemForm addItem={addTask} disabled={props.entityStatus === "loading"}/>
             {/*Tasks List*/}
             <List>
                 {arrayOfTasksLi}

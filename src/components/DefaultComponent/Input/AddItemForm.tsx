@@ -5,6 +5,7 @@ import {Add} from "@mui/icons-material";
 
 type AddItemFormPropsType = {
     addItem: (title: string) => void
+    disabled?: boolean
 }
 
 export const AddItemForm = React.memo((props: AddItemFormPropsType) => {
@@ -44,7 +45,7 @@ export const AddItemForm = React.memo((props: AddItemFormPropsType) => {
                        helperText={errorFil}
                        sx={{ minWidth: "198px"}}
             />
-            <IconButton onClick={addItem} color={"primary"}>
+            <IconButton onClick={addItem} color={"primary"} disabled={props.disabled}>
                 <Add/>
             </IconButton>
         </div>
