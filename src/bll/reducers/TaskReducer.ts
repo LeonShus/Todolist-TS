@@ -1,6 +1,7 @@
 import {AddTodoListAT, RemoveTodoListAT, SetTodoListsAT,} from "./TodoListReducer";
 import {Dispatch} from "redux";
 import {todolistApi, UpdateTaskParamType} from "../../api/todolistApi";
+import {setLoadingBarStatusAC} from "./AppReducer";
 
 export enum TaskStatuses {
     New = 0,
@@ -140,32 +141,44 @@ export const setTasks = (todolistId: string, tasks: TasksType[]) => {
 //THUNK
 
 export const setTasksTC = (todolistId: string) => (dispatch: Dispatch) => {
+    dispatch(setLoadingBarStatusAC("loading"))
     todolistApi.getTasks(todolistId)
         .then(res => {
             dispatch(setTasks(todolistId, res.data.items))
+
+            dispatch(setLoadingBarStatusAC("idle"))
         })
 }
 
 export const createTaskTC = (todolistId: string, title: string) => (dispatch: Dispatch) => {
+    dispatch(setLoadingBarStatusAC("loading"))
     todolistApi.createTask(todolistId, title)
         .then(res => {
             console.log(res, "create task")
             dispatch(addTaskAC(todolistId, res.data.data.item))
+
+            dispatch(setLoadingBarStatusAC("idle"))
         })
 }
 
 export const deleteTaskTC = (todolistId: string, taskId: string) => (dispatch: Dispatch) => {
+    dispatch(setLoadingBarStatusAC("loading"))
     todolistApi.deleteTask(todolistId, taskId)
         .then(res => {
             console.log(res)
             dispatch(removeTaskAC(todolistId, taskId))
+
+            dispatch(setLoadingBarStatusAC("idle"))
         })
 }
 
 export const upgradeTaskTC = (todolistId: string, taskId: string, param: UpdateTaskParamType) => (dispatch: Dispatch) => {
+    dispatch(setLoadingBarStatusAC("loading"))
     todolistApi.upgradeTask(todolistId, taskId, param)
         .then(res => {
             console.log(res)
             dispatch(changeTaskTitleAC(res.data.data.item))
+
+            dispatch(setLoadingBarStatusAC("idle"))
         })
 }

@@ -2,12 +2,14 @@ import React, {useCallback, useEffect} from "react";
 import "./App.css";
 import {TodoList} from "./components/TodoList/TodoList";
 import {AddItemForm} from "./components/DefaultComponent/Input/AddItemForm";
-import {Container, Grid} from "@mui/material";
+import {Container, Grid, LinearProgress} from "@mui/material";
 import {createTodosTC, setTodosTC, TodoListDomainType} from "./bll/reducers/TodoListReducer";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "./bll/store";
 import {Header} from "./components/Header/Header";
 import {TasksStateType} from "./bll/reducers/TaskReducer";
+import {RequestStatusType} from "./bll/reducers/AppReducer";
+import {ErrorSnackbar} from "./components/DefaultComponent/ErrorSnackbar/errorSnackBar";
 
 
 export const AppWithRedux = () => {
@@ -40,10 +42,19 @@ export const AppWithRedux = () => {
     }, [dispatch])
 
 
+    //less15
+    const loadingStatus = useSelector<AppRootStateType, RequestStatusType>(state => state.app.status)
+    console.log(loadingStatus)
+
+
     return (
         <>
             {/*Header*/}
             <Header/>
+
+            {loadingStatus === "loading" && <LinearProgress/>}
+
+
             {/*Main*/}
             <Container fixed>
                 {/*Add TodoList*/}
@@ -55,6 +66,9 @@ export const AppWithRedux = () => {
                     {todoListsComponents}
                 </Grid>
             </Container>
+
+
+            <ErrorSnackbar/>
         </>
     );
 }

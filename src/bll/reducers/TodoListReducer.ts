@@ -1,6 +1,7 @@
 import {v1} from "uuid";
 import {Dispatch} from "redux";
 import {todolistApi} from "../../api/todolistApi";
+import {setLoadingBarStatusAC} from "./AppReducer";
 
 export const todoListId_01 = v1()
 export const todoListId_02 = v1()
@@ -91,30 +92,42 @@ export const setTodoListsAC = (todos: TodoListType[]) => {
 //THUNK
 
 export const setTodosTC = () => (dispatch: any) => {
+    dispatch(setLoadingBarStatusAC("loading"))
     todolistApi.getTodos()
         .then(res => {
             dispatch(setTodoListsAC(res.data))
+
+            dispatch(setLoadingBarStatusAC("idle"))
         })
 }
 
 export const createTodosTC = (title: string) => (dispatch: Dispatch) => {
+    dispatch(setLoadingBarStatusAC("loading"))
     todolistApi.createTodolist(title)
         .then(res => {
             dispatch(addTodolistAC(res.data.data.item))
+
+            dispatch(setLoadingBarStatusAC("idle"))
         })
 }
 
 export const deleteTodosTC = (todolistId: string) => (dispatch: Dispatch) => {
+    dispatch(setLoadingBarStatusAC("loading"))
     todolistApi.deleteTodolist(todolistId)
         .then(res => {
             dispatch(removeTodoListAC(todolistId))
+
+            dispatch(setLoadingBarStatusAC("idle"))
         })
 }
 
 export const changeTodosTitleTC = (todolistId: string, title: string) => (dispatch: Dispatch) => {
+    dispatch(setLoadingBarStatusAC("loading"))
     todolistApi.updateTodolistTitle(todolistId, title)
         .then(res => {
             dispatch(changeTodoListTitleAC(todolistId, title))
+
+            dispatch(setLoadingBarStatusAC("idle"))
         })
 }
 
