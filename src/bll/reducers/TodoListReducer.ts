@@ -105,6 +105,7 @@ export const createTodosTC = (title: string) => (dispatch: Dispatch) => {
     dispatch(setLoadingBarStatusAC("loading"))
     todolistApi.createTodolist(title)
         .then(res => {
+
             dispatch(addTodolistAC(res.data.data.item))
 
             dispatch(setLoadingBarStatusAC("idle"))

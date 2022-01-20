@@ -63,3 +63,6 @@ export type UpdateTaskParamType = {
     deadline: string
 }
 
+export enum RequestResultCode {
+    complete,
+}
