@@ -113,29 +113,35 @@ export const setTodosTC = () => (dispatch: Dispatch<ActionsType>) => {
         .then(res => {
             dispatch(setTodoListsAC(res.data))
 
+        })
+        .catch(error => {
+            dispatch(setErrorAC(error.massage))
+        })
+        .finally(() => {
             dispatch(setLoadingBarStatusAC("idle"))
         })
 }
 
 export const createTodosTC = (title: string) => (dispatch: Dispatch<ActionsType>) => {
     dispatch(setLoadingBarStatusAC("loading"))
+
     todolistApi.createTodolist(title)
         .then(res => {
             if (res.data.resultCode === RequestResultCode.complete) {
                 dispatch(addTodolistAC(res.data.data.item))
-                dispatch(setLoadingBarStatusAC("idle"))
             } else {
                 if (res.data.messages.length) {
                     dispatch(setErrorAC(res.data.messages[0]))
                 } else {
                     dispatch(setErrorAC("Some error occured"))
                 }
-                dispatch(setLoadingBarStatusAC("failed"))
             }
         })
         .catch(error => {
             dispatch(setErrorAC(error.massage))
-            dispatch(setLoadingBarStatusAC("failed"))
+        })
+        .finally(() => {
+            dispatch(setLoadingBarStatusAC("idle"))
         })
 }
 
@@ -147,7 +153,6 @@ export const deleteTodosTC = (todolistId: string) => (dispatch: Dispatch<Actions
         .then(res => {
             if (res.data.resultCode === RequestResultCode.complete) {
                 dispatch(removeTodoListAC(todolistId))
-                dispatch(setLoadingBarStatusAC("idle"))
                 dispatch(changeTodoListEntityStatusAC(todolistId, "idle"))
             } else {
                 if (res.data.messages.length) {
@@ -155,8 +160,13 @@ export const deleteTodosTC = (todolistId: string) => (dispatch: Dispatch<Actions
                 } else {
                     dispatch(setErrorAC("Some error occured"))
                 }
-                dispatch(setLoadingBarStatusAC("failed"))
             }
+        })
+        .catch(error => {
+            dispatch(setErrorAC(error.massage))
+        })
+        .finally(() => {
+            dispatch(setLoadingBarStatusAC("idle"))
         })
 }
 
@@ -166,15 +176,19 @@ export const changeTodosTitleTC = (todolistId: string, title: string) => (dispat
         .then(res => {
             if (res.data.resultCode === RequestResultCode.complete) {
                 dispatch(changeTodoListTitleAC(todolistId, title))
-                dispatch(setLoadingBarStatusAC("idle"))
             } else {
                 if (res.data.messages.length) {
                     dispatch(setErrorAC(res.data.messages[0]))
                 } else {
                     dispatch(setErrorAC("Some error occured"))
                 }
-                dispatch(setLoadingBarStatusAC("failed"))
             }
+        })
+        .catch(error => {
+            dispatch(setErrorAC(error.massage))
+        })
+        .finally(() => {
+            dispatch(setLoadingBarStatusAC("idle"))
         })
 }
 

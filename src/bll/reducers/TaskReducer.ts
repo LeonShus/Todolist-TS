@@ -157,6 +157,11 @@ export const setTasksTC = (todolistId: string) => (dispatch: Dispatch<ActionsTyp
     todolistApi.getTasks(todolistId)
         .then(res => {
             dispatch(setTasks(todolistId, res.data.items))
+        })
+        .catch(error => {
+            dispatch(setErrorAC(error.massage))
+        })
+        .finally(() => {
             dispatch(setLoadingBarStatusAC("idle"))
         })
 }
@@ -169,7 +174,6 @@ export const createTaskTC = (todolistId: string, title: string) => (dispatch: Di
         .then(res => {
             if (res.data.resultCode === RequestResultCode.complete) {
                 dispatch(addTaskAC(todolistId, res.data.data.item))
-                dispatch(setLoadingBarStatusAC("idle"))
                 dispatch(changeTodoListEntityStatusAC(todolistId, "idle"))
             } else {
                 if (res.data.messages.length) {
@@ -177,9 +181,14 @@ export const createTaskTC = (todolistId: string, title: string) => (dispatch: Di
                 } else {
                     dispatch(setErrorAC("Some error occured"))
                 }
-                dispatch(setLoadingBarStatusAC("failed"))
                 dispatch(changeTodoListEntityStatusAC(todolistId, "idle"))
             }
+        })
+        .catch(error => {
+            dispatch(setErrorAC(error.massage))
+        })
+        .finally(() => {
+            dispatch(setLoadingBarStatusAC("idle"))
         })
 }
 
@@ -191,7 +200,6 @@ export const deleteTaskTC = (todolistId: string, taskId: string) => (dispatch: D
         .then(res => {
             if (res.data.resultCode === RequestResultCode.complete) {
                 dispatch(removeTaskAC(todolistId, taskId))
-                dispatch(setLoadingBarStatusAC("idle"))
                 dispatch(changeTodoListEntityStatusAC(todolistId, "idle"))
             } else {
                 if (res.data.messages.length) {
@@ -199,9 +207,14 @@ export const deleteTaskTC = (todolistId: string, taskId: string) => (dispatch: D
                 } else {
                     dispatch(setErrorAC("Some error occured"))
                 }
-                dispatch(setLoadingBarStatusAC("failed"))
                 dispatch(changeTodoListEntityStatusAC(todolistId, "idle"))
             }
+        })
+        .catch(error => {
+            dispatch(setErrorAC(error.massage))
+        })
+        .finally(() => {
+            dispatch(setLoadingBarStatusAC("idle"))
         })
 }
 
@@ -211,14 +224,19 @@ export const upgradeTaskTC = (todolistId: string, taskId: string, param: UpdateT
         .then(res => {
             if (res.data.resultCode === RequestResultCode.complete) {
                 dispatch(changeTaskTitleAC(res.data.data.item))
-                dispatch(setLoadingBarStatusAC("idle"))
             } else {
                 if (res.data.messages.length) {
                     dispatch(setErrorAC(res.data.messages[0]))
                 } else {
                     dispatch(setErrorAC("Some error occured"))
                 }
-                dispatch(setLoadingBarStatusAC("failed"))
             }
+
+        })
+        .catch(error => {
+            dispatch(setErrorAC(error.massage))
+        })
+        .finally(() => {
+            dispatch(setLoadingBarStatusAC("idle"))
         })
 }
