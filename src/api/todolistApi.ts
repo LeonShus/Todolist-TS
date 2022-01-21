@@ -65,4 +65,6 @@ export type UpdateTaskParamType = {
 
 export enum RequestResultCode {
     complete,
+    error,
+    captcha = 10
 }
