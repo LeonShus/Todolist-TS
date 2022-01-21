@@ -1,7 +1,13 @@
-import {AddTodoListAT, changeTodoListEntityStatusAC, RemoveTodoListAT, SetTodoListsAT,} from "./TodoListReducer";
+import {
+    AddTodoListAT,
+    changeTodoListEntityStatusAC,
+    ChangeTodoListEntityStatusAT,
+    RemoveTodoListAT,
+    SetTodoListsAT,
+} from "./TodoListReducer";
 import {Dispatch} from "redux";
 import {RequestResultCode, todolistApi, UpdateTaskParamType} from "../../api/todolistApi";
-import {setErrorAC, setLoadingBarStatusAC} from "./AppReducer";
+import {setErrorAC, SetErrorAT, setLoadingBarStatusAC, SetLoadingBarStatusAT} from "./AppReducer";
 
 export enum TaskStatuses {
     New = 0,
@@ -45,6 +51,9 @@ export type ActionsType =
     | RemoveTodoListAT
     | SetTodoListsAT
     | SetTasksAT
+    | SetLoadingBarStatusAT
+    | SetErrorAT
+    | ChangeTodoListEntityStatusAT
 
 const initialState: TasksStateType = {}
 
@@ -142,7 +151,7 @@ export const setTasks = (todolistId: string, tasks: TasksType[]) => {
 //THUNK
 
 
-export const setTasksTC = (todolistId: string) => (dispatch: Dispatch) => {
+export const setTasksTC = (todolistId: string) => (dispatch: Dispatch<ActionsType>) => {
     dispatch(setLoadingBarStatusAC("loading"))
 
     todolistApi.getTasks(todolistId)
@@ -152,21 +161,21 @@ export const setTasksTC = (todolistId: string) => (dispatch: Dispatch) => {
         })
 }
 
-export const createTaskTC = (todolistId: string, title: string) => (dispatch: Dispatch) => {
+export const createTaskTC = (todolistId: string, title: string) => (dispatch: Dispatch<ActionsType>) => {
     dispatch(setLoadingBarStatusAC("loading"))
     dispatch(changeTodoListEntityStatusAC(todolistId, "loading"))
 
     todolistApi.createTask(todolistId, title)
         .then(res => {
-            if(res.data.resultCode === RequestResultCode.complete){
+            if (res.data.resultCode === RequestResultCode.complete) {
                 dispatch(addTaskAC(todolistId, res.data.data.item))
                 dispatch(setLoadingBarStatusAC("idle"))
                 dispatch(changeTodoListEntityStatusAC(todolistId, "idle"))
             } else {
-                if(res.data.messages.length){
+                if (res.data.messages.length) {
                     dispatch(setErrorAC(res.data.messages[0]))
                 } else {
-                    dispatch(setErrorAC('Some error occured'))
+                    dispatch(setErrorAC("Some error occured"))
                 }
                 dispatch(setLoadingBarStatusAC("failed"))
                 dispatch(changeTodoListEntityStatusAC(todolistId, "idle"))
@@ -174,21 +183,21 @@ export const createTaskTC = (todolistId: string, title: string) => (dispatch: Di
         })
 }
 
-export const deleteTaskTC = (todolistId: string, taskId: string) => (dispatch: Dispatch) => {
+export const deleteTaskTC = (todolistId: string, taskId: string) => (dispatch: Dispatch<ActionsType>) => {
     dispatch(setLoadingBarStatusAC("loading"))
     dispatch(changeTodoListEntityStatusAC(todolistId, "loading"))
 
     todolistApi.deleteTask(todolistId, taskId)
         .then(res => {
-            if(res.data.resultCode === RequestResultCode.complete) {
+            if (res.data.resultCode === RequestResultCode.complete) {
                 dispatch(removeTaskAC(todolistId, taskId))
                 dispatch(setLoadingBarStatusAC("idle"))
                 dispatch(changeTodoListEntityStatusAC(todolistId, "idle"))
             } else {
-                if(res.data.messages.length){
+                if (res.data.messages.length) {
                     dispatch(setErrorAC(res.data.messages[0]))
                 } else {
-                    dispatch(setErrorAC('Some error occured'))
+                    dispatch(setErrorAC("Some error occured"))
                 }
                 dispatch(setLoadingBarStatusAC("failed"))
                 dispatch(changeTodoListEntityStatusAC(todolistId, "idle"))
@@ -196,18 +205,18 @@ export const deleteTaskTC = (todolistId: string, taskId: string) => (dispatch: D
         })
 }
 
-export const upgradeTaskTC = (todolistId: string, taskId: string, param: UpdateTaskParamType) => (dispatch: Dispatch) => {
+export const upgradeTaskTC = (todolistId: string, taskId: string, param: UpdateTaskParamType) => (dispatch: Dispatch<ActionsType>) => {
     dispatch(setLoadingBarStatusAC("loading"))
     todolistApi.upgradeTask(todolistId, taskId, param)
         .then(res => {
-            if(res.data.resultCode === RequestResultCode.complete) {
+            if (res.data.resultCode === RequestResultCode.complete) {
                 dispatch(changeTaskTitleAC(res.data.data.item))
                 dispatch(setLoadingBarStatusAC("idle"))
             } else {
-                if(res.data.messages.length){
+                if (res.data.messages.length) {
                     dispatch(setErrorAC(res.data.messages[0]))
                 } else {
-                    dispatch(setErrorAC('Some error occured'))
+                    dispatch(setErrorAC("Some error occured"))
                 }
                 dispatch(setLoadingBarStatusAC("failed"))
             }

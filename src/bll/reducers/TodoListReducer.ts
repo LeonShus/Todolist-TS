@@ -1,6 +1,6 @@
 import {Dispatch} from "redux";
 import {RequestResultCode, todolistApi} from "../../api/todolistApi";
-import {RequestStatusType, setErrorAC, setLoadingBarStatusAC} from "./AppReducer";
+import {RequestStatusType, setErrorAC, SetErrorAT, setLoadingBarStatusAC, SetLoadingBarStatusAT} from "./AppReducer";
 
 
 export type ActionsType =
@@ -10,6 +10,8 @@ export type ActionsType =
     | FilterTodoListAT
     | SetTodoListsAT
     | ChangeTodoListEntityStatusAT
+    | SetLoadingBarStatusAT
+    | SetErrorAT
 
 const initialState: Array<TodoListDomainType> = []
 
@@ -105,7 +107,7 @@ export const changeTodoListEntityStatusAC = (todolistId: string, entityStatus: R
 
 //THUNK
 
-export const setTodosTC = () => (dispatch: any) => {
+export const setTodosTC = () => (dispatch: Dispatch<ActionsType>) => {
     dispatch(setLoadingBarStatusAC("loading"))
     todolistApi.getTodos()
         .then(res => {
@@ -115,7 +117,7 @@ export const setTodosTC = () => (dispatch: any) => {
         })
 }
 
-export const createTodosTC = (title: string) => (dispatch: Dispatch) => {
+export const createTodosTC = (title: string) => (dispatch: Dispatch<ActionsType>) => {
     dispatch(setLoadingBarStatusAC("loading"))
     todolistApi.createTodolist(title)
         .then(res => {
@@ -131,9 +133,13 @@ export const createTodosTC = (title: string) => (dispatch: Dispatch) => {
                 dispatch(setLoadingBarStatusAC("failed"))
             }
         })
+        .catch(error => {
+            dispatch(setErrorAC(error.massage))
+            dispatch(setLoadingBarStatusAC("failed"))
+        })
 }
 
-export const deleteTodosTC = (todolistId: string) => (dispatch: Dispatch) => {
+export const deleteTodosTC = (todolistId: string) => (dispatch: Dispatch<ActionsType>) => {
     dispatch(setLoadingBarStatusAC("loading"))
     dispatch(changeTodoListEntityStatusAC(todolistId, "loading"))
 
@@ -154,7 +160,7 @@ export const deleteTodosTC = (todolistId: string) => (dispatch: Dispatch) => {
         })
 }
 
-export const changeTodosTitleTC = (todolistId: string, title: string) => (dispatch: Dispatch) => {
+export const changeTodosTitleTC = (todolistId: string, title: string) => (dispatch: Dispatch<ActionsType>) => {
     dispatch(setLoadingBarStatusAC("loading"))
     todolistApi.updateTodolistTitle(todolistId, title)
         .then(res => {
