@@ -39,7 +39,7 @@ export const todolistApi = {
 }
 
 
-type ResponseType<T> = {
+export type ResponseType<T> = {
     fieldsErrors: Array<string>
     messages: Array<string>
     order?: number

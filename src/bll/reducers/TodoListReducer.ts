@@ -1,6 +1,7 @@
 import {Dispatch} from "redux";
 import {RequestResultCode, todolistApi} from "../../api/todolistApi";
 import {RequestStatusType, setErrorAC, SetErrorAT, setLoadingBarStatusAC, SetLoadingBarStatusAT} from "./AppReducer";
+import {handleServerAppError} from "../../utils/error-utils";
 
 
 export type ActionsType =
@@ -130,11 +131,7 @@ export const createTodosTC = (title: string) => (dispatch: Dispatch<ActionsType>
             if (res.data.resultCode === RequestResultCode.complete) {
                 dispatch(addTodolistAC(res.data.data.item))
             } else {
-                if (res.data.messages.length) {
-                    dispatch(setErrorAC(res.data.messages[0]))
-                } else {
-                    dispatch(setErrorAC("Some error occured"))
-                }
+                handleServerAppError<{ item: TodoListType }>(dispatch, res.data)
             }
         })
         .catch(error => {
@@ -155,11 +152,7 @@ export const deleteTodosTC = (todolistId: string) => (dispatch: Dispatch<Actions
                 dispatch(removeTodoListAC(todolistId))
                 dispatch(changeTodoListEntityStatusAC(todolistId, "idle"))
             } else {
-                if (res.data.messages.length) {
-                    dispatch(setErrorAC(res.data.messages[0]))
-                } else {
-                    dispatch(setErrorAC("Some error occured"))
-                }
+                handleServerAppError(dispatch, res.data)
             }
         })
         .catch(error => {
@@ -177,11 +170,7 @@ export const changeTodosTitleTC = (todolistId: string, title: string) => (dispat
             if (res.data.resultCode === RequestResultCode.complete) {
                 dispatch(changeTodoListTitleAC(todolistId, title))
             } else {
-                if (res.data.messages.length) {
-                    dispatch(setErrorAC(res.data.messages[0]))
-                } else {
-                    dispatch(setErrorAC("Some error occured"))
-                }
+                handleServerAppError(dispatch, res.data)
             }
         })
         .catch(error => {
