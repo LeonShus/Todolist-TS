@@ -10,6 +10,8 @@ import {Header} from "./components/Header/Header";
 import {TasksStateType} from "./bll/reducers/TaskReducer";
 import {RequestStatusType} from "./bll/reducers/AppReducer";
 import {ErrorSnackbar} from "./components/DefaultComponent/ErrorSnackbar/errorSnackBar";
+import {Login} from "./features/login/login";
+import {Routes, Route, Navigate} from "react-router-dom";
 
 
 export const AppWithRedux = () => {
@@ -55,19 +57,24 @@ export const AppWithRedux = () => {
 
             {loadingStatus === "loading" && <LinearProgress/>}
 
+            <Routes>
+                <Route path={"/"} element={
+                    <Container fixed>
+                        {/*Add TodoList*/}
+                        <Grid container sx={{padding: "10px 0 10px "}}>
+                            <AddItemForm addItem={addToDoList}/>
+                        </Grid>
+                        {/*TodoLists*/}
+                        <Grid container spacing={5}>
+                            {todoListsComponents}
+                        </Grid>
+                    </Container>
+                }/>
+                <Route path={"login"} element={<Login/>}/>
 
-            {/*Main*/}
-            <Container fixed>
-                {/*Add TodoList*/}
-                <Grid container sx={{padding: "10px 0 10px "}}>
-                    <AddItemForm addItem={addToDoList}/>
-                </Grid>
-                {/*TodoLists*/}
-                <Grid container spacing={5}>
-                    {todoListsComponents}
-                </Grid>
-            </Container>
-
+                <Route path={"/404"} element={<h1>404: PAGE NOT FOUND</h1>}/>
+                <Route path="*" element={<Navigate to={"/404"}/>}/>
+            </Routes>
 
             <ErrorSnackbar/>
         </>
