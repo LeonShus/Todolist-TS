@@ -69,6 +69,28 @@ export const authMe = () => (dispatch: Dispatch<ActionsType>) => {
         })
 }
 
+export const logOut = () => (dispatch: Dispatch<ActionsType>) => {
+    dispatch(setLoadingBarStatusAC("loading"))
+    authApi.logOut()
+        .then(res => {
+            if (res.data.resultCode === RequestResultCode.complete) {
+                dispatch(setIsLoggedInAC(false))
+            } else {
+                if (res.data.messages.length) {
+                    dispatch(setErrorAC(res.data.messages[0]))
+                } else {
+                    dispatch(setErrorAC("Some error occured"))
+                }
+            }
+        })
+        .catch(error => {
+            dispatch(setErrorAC(error.massage))
+        })
+        .finally(() => {
+            dispatch(setLoadingBarStatusAC("idle"))
+        })
+}
+
 // types
 type ActionsType = ReturnType<typeof setIsLoggedInAC> | SetLoadingBarStatusAT | SetErrorAT | IsInitializedAT
 
