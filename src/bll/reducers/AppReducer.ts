@@ -2,7 +2,8 @@ export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'
 
 const initialState = {
     status: 'idle' as RequestStatusType,
-    error: null as string | null
+    error: null as string | null,
+    isInitialized: false
 }
 
 type InitialStateType = typeof initialState
@@ -16,12 +17,14 @@ export const appReducer = (state: InitialStateType = initialState, action: AppAc
                 ...state,
                 error: action.error
             }
+        case "APP/IS-INITIALIZED":
+            return {...state, isInitialized: action.isInit}
         default:
             return state
     }
 }
 
-type AppActionsType = SetLoadingBarStatusAT | SetErrorAT
+type AppActionsType = SetLoadingBarStatusAT | SetErrorAT | IsInitializedAT
 
 export type SetLoadingBarStatusAT = ReturnType<typeof setLoadingBarStatusAC>
 export const setLoadingBarStatusAC = (status: RequestStatusType) => {
@@ -36,5 +39,13 @@ export const setErrorAC = (error: string | null) => {
     return {
         type: "APP/SET-ERROR",
         error
+    } as const
+}
+
+export type IsInitializedAT = ReturnType<typeof isInitializedAC>
+export const isInitializedAC = (isInit: boolean) => {
+    return {
+        type: "APP/IS-INITIALIZED",
+        isInit
     } as const
 }

@@ -112,8 +112,7 @@ export const setTodosTC = () => (dispatch: Dispatch<ActionsType>) => {
     dispatch(setLoadingBarStatusAC("loading"))
     todolistApi.getTodos()
         .then(res => {
-            dispatch(setTodoListsAC(res.data))
-
+                dispatch(setTodoListsAC(res.data))
         })
         .catch(error => {
             dispatch(setErrorAC(error.massage))

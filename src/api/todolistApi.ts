@@ -44,7 +44,10 @@ export const authApi = {
         return instance.post<Omit<ResponseType<{userId: number}>, "fieldsErrors" | "order">>(`auth/login`, data)
     },
     authMe(){
-        return instance.get(`auth/me`)
+        return instance.get<Omit<ResponseType<{id: number, email: string, login: string}>, "order">>(`auth/me`)
+    },
+    logOut(){
+        return instance.delete<Omit<ResponseType<{}>, "fieldsErrors" | "order">>(`auth/login`)
     }
 }
 

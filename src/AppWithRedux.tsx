@@ -1,7 +1,7 @@
-import React from "react";
+import React, {useEffect} from "react";
 import "./App.css";
 import {LinearProgress} from "@mui/material";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "./bll/store";
 import {Header} from "./components/Header/Header";
 import {RequestStatusType} from "./bll/reducers/AppReducer";
@@ -9,13 +9,27 @@ import {ErrorSnackbar} from "./components/DefaultComponent/ErrorSnackbar/errorSn
 import {Login} from "./features/login/login";
 import {Navigate, Route, Routes} from "react-router-dom";
 import {TodoLists} from "./components/TodoLists/TodoLists";
+import {authMe} from "./bll/reducers/AuthReducer";
 
 
 export const AppWithRedux = () => {
 
+    const dispatch = useDispatch()
+    const isInitialized = useSelector<AppRootStateType, boolean>(state => state.app.isInitialized)
     //Loading bar
     const loadingStatus = useSelector<AppRootStateType, RequestStatusType>(state => state.app.status)
 
+
+    useEffect(() => {
+        dispatch(authMe())
+    }, [dispatch])
+
+    if (!isInitialized) {
+        return <div
+            style={{position: 'fixed', top: '30%', textAlign: 'center', width: '100%'}}>
+            <LinearProgress/>
+        </div>
+    }
 
     return (
         <>

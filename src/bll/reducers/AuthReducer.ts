@@ -1,5 +1,12 @@
 import {Dispatch} from "redux"
-import {setErrorAC, SetErrorAT, setLoadingBarStatusAC, SetLoadingBarStatusAT} from "./AppReducer";
+import {
+    isInitializedAC,
+    IsInitializedAT,
+    setErrorAC,
+    SetErrorAT,
+    setLoadingBarStatusAC,
+    SetLoadingBarStatusAT
+} from "./AppReducer";
 import {authApi, RequestResultCode} from "../../api/todolistApi";
 
 
@@ -47,16 +54,12 @@ export const authMe = () => (dispatch: Dispatch<ActionsType>) => {
     dispatch(setLoadingBarStatusAC("loading"))
     authApi.authMe()
         .then(res => {
-            // if (res.data.resultCode === RequestResultCode.complete) {
-            //     dispatch(setIsLoggedInAC(true))
-            // } else {
-            //     if (res.data.messages.length) {
-            //         dispatch(setErrorAC(res.data.messages[0]))
-            //     } else {
-            //         dispatch(setErrorAC("Some error occured"))
-            //     }
-            // }
-            console.log(res)
+            if (res.data.resultCode === RequestResultCode.complete) {
+                dispatch(setIsLoggedInAC(true))
+                dispatch(isInitializedAC(true))
+            } else {
+                dispatch(isInitializedAC(true))
+            }
         })
         .catch(error => {
             dispatch(setErrorAC(error.massage))
@@ -67,7 +70,7 @@ export const authMe = () => (dispatch: Dispatch<ActionsType>) => {
 }
 
 // types
-type ActionsType = ReturnType<typeof setIsLoggedInAC> | SetLoadingBarStatusAT | SetErrorAT
+type ActionsType = ReturnType<typeof setIsLoggedInAC> | SetLoadingBarStatusAT | SetErrorAT | IsInitializedAT
 
 export type AuthDataType = {
     email: string
