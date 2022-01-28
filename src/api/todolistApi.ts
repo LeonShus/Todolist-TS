@@ -42,6 +42,9 @@ export const todolistApi = {
 export const authApi = {
     login(data: AuthDataType){
         return instance.post<Omit<ResponseType<{userId: number}>, "fieldsErrors" | "order">>(`auth/login`, data)
+    },
+    authMe(){
+        return instance.get(`auth/me`)
     }
 }
 
