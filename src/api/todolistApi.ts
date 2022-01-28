@@ -1,6 +1,7 @@
 import axios from "axios";
 import {TodoListType} from "../bll/reducers/TodoListReducer";
 import {TaskPriorities, TaskStatuses, TasksType} from "../bll/reducers/TaskReducer";
+import {AuthDataType} from "../bll/reducers/AuthReducer";
 
 const instance = axios.create({
     baseURL: "https://social-network.samuraijs.com/api/1.1/",
@@ -35,6 +36,12 @@ export const todolistApi = {
     },
     upgradeTask(todolistId: string, taskId: string, param: UpdateTaskParamType) {
         return instance.put<ResponseType<{ item: TasksType}>>(`todo-lists/${todolistId}/tasks/${taskId}`, param)
+    }
+}
+
+export const authApi = {
+    login(data: AuthDataType){
+        return instance.post<Omit<ResponseType<{userId: number}>, "fieldsErrors" | "order">>(`auth/login`, data)
     }
 }
 
