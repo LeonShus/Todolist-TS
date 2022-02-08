@@ -8,32 +8,35 @@ import {
     SetLoadingBarStatusAT
 } from "./AppReducer";
 import {authApi, RequestResultCode} from "../../api/todolistApi";
+import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 
 
 const initialState = {
     isLoggedIn: false
 }
-type InitialStateType = typeof initialState
 
-export const authReducer = (state: InitialStateType = initialState, action: ActionsType): InitialStateType => {
-    switch (action.type) {
-        case "login/SET-IS-LOGGED-IN":
-            return {...state, isLoggedIn: action.value}
-        default:
-            return state
+const slice = createSlice({
+    name: "auth",
+    initialState,
+    reducers: {
+        setIsLoggedInAC(state, action: PayloadAction<{value: boolean}>){
+            state.isLoggedIn = action.payload.value
+        }
     }
-}
-// actions
-export const setIsLoggedInAC = (value: boolean) =>
-    ({type: "login/SET-IS-LOGGED-IN", value} as const)
+})
+
+export const authReducer = slice.reducer
+
+export const {setIsLoggedInAC} = slice.actions
+
 
 // thunks
-export const loginTC = (data: AuthDataType) => (dispatch: Dispatch<ActionsType>) => {
+export const loginTC = (data: AuthDataType) => (dispatch: Dispatch) => {
     dispatch(setLoadingBarStatusAC("loading"))
     authApi.login(data)
         .then(res => {
             if (res.data.resultCode === RequestResultCode.complete) {
-                dispatch(setIsLoggedInAC(true))
+                dispatch(setIsLoggedInAC({value:true}))
             } else {
                 if (res.data.messages.length) {
                     dispatch(setErrorAC(res.data.messages[0]))
@@ -50,12 +53,12 @@ export const loginTC = (data: AuthDataType) => (dispatch: Dispatch<ActionsType>)
         })
 }
 
-export const authMe = () => (dispatch: Dispatch<ActionsType>) => {
+export const authMe = () => (dispatch: Dispatch) => {
     dispatch(setLoadingBarStatusAC("loading"))
     authApi.authMe()
         .then(res => {
             if (res.data.resultCode === RequestResultCode.complete) {
-                dispatch(setIsLoggedInAC(true))
+                dispatch(setIsLoggedInAC({value:true}))
                 dispatch(isInitializedAC(true))
             } else {
                 dispatch(isInitializedAC(true))
@@ -69,12 +72,12 @@ export const authMe = () => (dispatch: Dispatch<ActionsType>) => {
         })
 }
 
-export const logOut = () => (dispatch: Dispatch<ActionsType>) => {
+export const logOut = () => (dispatch: Dispatch) => {
     dispatch(setLoadingBarStatusAC("loading"))
     authApi.logOut()
         .then(res => {
             if (res.data.resultCode === RequestResultCode.complete) {
-                dispatch(setIsLoggedInAC(false))
+                dispatch(setIsLoggedInAC({value:true}))
             } else {
                 if (res.data.messages.length) {
                     dispatch(setErrorAC(res.data.messages[0]))
@@ -92,7 +95,6 @@ export const logOut = () => (dispatch: Dispatch<ActionsType>) => {
 }
 
 // types
-type ActionsType = ReturnType<typeof setIsLoggedInAC> | SetLoadingBarStatusAT | SetErrorAT | IsInitializedAT
 
 export type AuthDataType = {
     email: string
