@@ -47,79 +47,75 @@ export type TasksStateType = {
 const initialState: TasksStateType = {}
 
 const slice = createSlice({
-    name: "task",
+    name: "tasks",
     initialState,
     reducers: {
-        addTaskAC(state, action: PayloadAction<{todolistId: string, task: TasksType}>){
-
+        addTaskAC(state: TasksStateType, action: PayloadAction<{todolistId: string, task: TasksType}>){
+            state[action.payload.todolistId].unshift(action.payload.task)
         },
-        removeTaskAC(state, action: PayloadAction<{todoListId: string, taskId: string}>){
-
+        removeTaskAC(state: TasksStateType, action: PayloadAction<{todoListId: string, taskId: string}>){
+            let index = state[action.payload.todoListId].findIndex(el => el.id === action.payload.taskId)
+            if(index > -1){
+                state[action.payload.todoListId].slice(index, 1)
+            }
         },
-        changeTaskStatusAC(state, action: PayloadAction<{task: TasksType}>){
-
+        changeTaskStatusAC(state: TasksStateType, action: PayloadAction<{task: TasksType}>){
+            let index = state[action.payload.task.todoListId].findIndex(el => el.id === action.payload.task.id)
+            if(index > -1){
+                state[action.payload.task.todoListId][index] = action.payload.task
+            }
         },
-        changeTaskTitleAC(state, action: PayloadAction<{task: TasksType}>){
-
+        changeTaskTitleAC(state: TasksStateType, action: PayloadAction<{task: TasksType}>){
+            let index = state[action.payload.task.todoListId].findIndex(el => el.id === action.payload.task.id)
+            if(index > -1){
+                state[action.payload.task.todoListId][index] = action.payload.task
+            }
         },
-
+        setTasksAC(state: TasksStateType, action: PayloadAction<{todolistId: string, tasks: TasksType[]}>){
+            state[action.payload.todolistId] = action.payload.tasks
+        }
     }
 })
 
+export const {addTaskAC, removeTaskAC, changeTaskStatusAC, changeTaskTitleAC, setTasksAC} = slice.actions
 
 
-
-
-type ChangeTaskTitleAT = ReturnType<typeof changeTaskTitleAC>
-export const changeTaskTitleAC = (task: TasksType) => {
-    return {
-        type: "CHANGE-TASK-TITLE",
-        task
-    } as const
-}
-
-export type SetTasksAT = ReturnType<typeof setTasks>
-export const setTasks = (todolistId: string, tasks: TasksType[]) => {
-    return {
-        type: "SET-TASKS",
-        tasks,
-        todolistId
-    } as const
-}
-
-export const tasksReducer = (state: TasksStateType = initialState, action: ActionsType): TasksStateType => {
+export const tasksReducer = (state: TasksStateType = initialState, action: any): TasksStateType => {
     switch (action.type) {
-        case "REMOVE-TASK":
-            return {
-                ...state,
-                [action.todoListId]: state[action.todoListId]
-                    .filter(el => el.id !== action.taskId)
-            }
-        case "ADD-TASK":
-            return {
-                ...state,
-                [action.todolistId]: [
-                    action.task,
-                    ...state[action.todolistId]
-                ],
-            }
-        case "CHANGE-TASK-STATUS":
-        case "CHANGE-TASK-TITLE":
-            return {
-                ...state,
-                [action.task.todoListId]: state[action.task.todoListId]
-                    .map(el => el.id === action.task.id ? action.task : el)
-            }
+        // case "REMOVE-TASK":
+        //     return {
+        //         ...state,
+        //         [action.todoListId]: state[action.todoListId]
+        //             .filter(el => el.id !== action.taskId)
+        //     }
+        // case "ADD-TASK":
+        //     return {
+        //         ...state,
+        //         [action.todolistId]: [
+        //             action.task,
+        //             ...state[action.todolistId]
+        //         ],
+        //     }
+        // case "CHANGE-TASK-STATUS":
+        // case "CHANGE-TASK-TITLE":
+        //     return {
+        //         ...state,
+        //         [action.task.todoListId]: state[action.task.todoListId]
+        //             .map(el => el.id === action.task.id ? action.task : el)
+        //     }
         case "ADD-TODOLIST":
+            ++++++
             return {
                 ...state,
                 [action.todos.id]: []
             }
         case "REMOVE-TODOLIST":
+            ++++++
             const stateCopy = {...state}
             delete stateCopy[action.todoListId]
             return stateCopy
         case "SET-TODOLISTS": {
+            ++++++++
             const copyState = {...state}
             action.todos.forEach(el => {
                 copyState[el.id] = []
