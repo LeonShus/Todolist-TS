@@ -1,12 +1,5 @@
 import {Dispatch} from "redux"
-import {
-    isInitializedAC,
-    IsInitializedAT,
-    setErrorAC,
-    SetErrorAT,
-    setLoadingBarStatusAC,
-    SetLoadingBarStatusAT
-} from "./AppReducer";
+import {isInitializedAC, setErrorAC, setLoadingBarStatusAC} from "./AppReducer";
 import {authApi, RequestResultCode} from "../../api/todolistApi";
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 
@@ -19,7 +12,7 @@ const slice = createSlice({
     name: "auth",
     initialState,
     reducers: {
-        setIsLoggedInAC(state, action: PayloadAction<{value: boolean}>){
+        setIsLoggedInAC(state, action: PayloadAction<{ value: boolean }>) {
             state.isLoggedIn = action.payload.value
         }
     }
@@ -32,16 +25,16 @@ export const {setIsLoggedInAC} = slice.actions
 
 // thunks
 export const loginTC = (data: AuthDataType) => (dispatch: Dispatch) => {
-    dispatch(setLoadingBarStatusAC("loading"))
+    dispatch(setLoadingBarStatusAC({status: "loading"}))
     authApi.login(data)
         .then(res => {
             if (res.data.resultCode === RequestResultCode.complete) {
-                dispatch(setIsLoggedInAC({value:true}))
+                dispatch(setIsLoggedInAC({value: true}))
             } else {
                 if (res.data.messages.length) {
-                    dispatch(setErrorAC(res.data.messages[0]))
+                    dispatch(setErrorAC({error: res.data.messages[0]}))
                 } else {
-                    dispatch(setErrorAC("Some error occured"))
+                    dispatch(setErrorAC({error: "Some error occured"}))
                 }
             }
         })
@@ -49,40 +42,40 @@ export const loginTC = (data: AuthDataType) => (dispatch: Dispatch) => {
             dispatch(setErrorAC(error.massage))
         })
         .finally(() => {
-            dispatch(setLoadingBarStatusAC("idle"))
+            dispatch(setLoadingBarStatusAC({status: "idle"}))
         })
 }
 
 export const authMe = () => (dispatch: Dispatch) => {
-    dispatch(setLoadingBarStatusAC("loading"))
+    dispatch(setLoadingBarStatusAC({status: "loading"}))
     authApi.authMe()
         .then(res => {
             if (res.data.resultCode === RequestResultCode.complete) {
-                dispatch(setIsLoggedInAC({value:true}))
-                dispatch(isInitializedAC(true))
+                dispatch(setIsLoggedInAC({value: true}))
+                dispatch(isInitializedAC({isInitialized: true}))
             } else {
-                dispatch(isInitializedAC(true))
+                dispatch(isInitializedAC({isInitialized: true}))
             }
         })
         .catch(error => {
             dispatch(setErrorAC(error.massage))
         })
         .finally(() => {
-            dispatch(setLoadingBarStatusAC("idle"))
+            dispatch(setLoadingBarStatusAC({status: "idle"}))
         })
 }
 
 export const logOut = () => (dispatch: Dispatch) => {
-    dispatch(setLoadingBarStatusAC("loading"))
+    dispatch(setLoadingBarStatusAC({status: "loading"}))
     authApi.logOut()
         .then(res => {
             if (res.data.resultCode === RequestResultCode.complete) {
-                dispatch(setIsLoggedInAC({value:true}))
+                dispatch(setIsLoggedInAC({value: true}))
             } else {
                 if (res.data.messages.length) {
-                    dispatch(setErrorAC(res.data.messages[0]))
+                    dispatch(setErrorAC({error: res.data.messages[0]}))
                 } else {
-                    dispatch(setErrorAC("Some error occured"))
+                    dispatch(setErrorAC({error: "Some error occured"}))
                 }
             }
         })
@@ -90,7 +83,7 @@ export const logOut = () => (dispatch: Dispatch) => {
             dispatch(setErrorAC(error.massage))
         })
         .finally(() => {
-            dispatch(setLoadingBarStatusAC("idle"))
+            dispatch(setLoadingBarStatusAC({status: "idle"}))
         })
 }
 
