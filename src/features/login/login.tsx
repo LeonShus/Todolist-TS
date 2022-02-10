@@ -8,11 +8,11 @@ import FormLabel from "@mui/material/FormLabel";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import {useFormik} from "formik";
-import * as Yup from 'yup'
+import * as Yup from "yup"
 import {useDispatch, useSelector} from "react-redux";
 import {loginTC} from "../../bll/reducers/AuthReducer";
 import {AppRootStateType} from "../../bll/store";
-import { Navigate } from "react-router-dom";
+import {Navigate} from "react-router-dom";
 
 export const Login = () => {
 
@@ -29,7 +29,7 @@ export const Login = () => {
             email: Yup.string()
                 .email("Invalid email address").required("Required"),
             password: Yup.string()
-                .min(6, 'Min size 6 char').required("Required")
+                .min(6, "Min size 6 char").required("Required")
         }),
         onSubmit: values => {
             dispatch(loginTC(values))
@@ -37,8 +37,8 @@ export const Login = () => {
         }
     })
 
-    if(isLoggedIn){
-        return(
+    if (isLoggedIn) {
+        return (
             <Navigate to={"/"}/>
         )
     }
@@ -64,7 +64,7 @@ export const Login = () => {
 
                         />
                         {formik.touched.email && formik.errors.email &&
-                            <div>{formik.errors.email}</div>
+                        <div>{formik.errors.email}</div>
                         }
                         <TextField type="password"
                                    label="Password"

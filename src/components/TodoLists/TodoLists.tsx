@@ -40,7 +40,7 @@ export const TodoLists = React.memo(() => {
 
     useEffect(() => {
         dispatch(setTodosTC())
-    }, [])
+    }, [dispatch])
 
 
     //less15
