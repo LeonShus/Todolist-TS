@@ -21,15 +21,15 @@ export const Login = () => {
 
     const formik = useFormik({
         initialValues: {
-            email: "",
-            password: "",
+            email: "free@samuraijs.com",
+            password: "free",
             rememberMe: false
         },
         validationSchema: Yup.object({
             email: Yup.string()
                 .email("Invalid email address").required("Required"),
             password: Yup.string()
-                .min(6, "Min size 6 char").required("Required")
+                .min(3, "Min size 6 char").required("Required")
         }),
         onSubmit: values => {
             dispatch(loginTC(values))
@@ -38,9 +38,7 @@ export const Login = () => {
     })
 
     if (isLoggedIn) {
-        return (
-            <Navigate to={"/"}/>
-        )
+        return <Navigate to={"/to-do-lists"}/>
     }
 
     return <Grid container justifyContent={"center"}>

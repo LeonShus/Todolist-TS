@@ -9,6 +9,7 @@ import {ErrorSnackbar} from "./components/DefaultComponent/ErrorSnackbar/errorSn
 import {Login} from "./features/login/login";
 import {Navigate, Route, Routes} from "react-router-dom";
 import {authMe} from "./bll/reducers/AuthReducer";
+import { TodoLists } from "./components/TodoLists/TodoLists";
 
 
 export const AppWithRedux = () => {
@@ -38,11 +39,10 @@ export const AppWithRedux = () => {
             {loadingStatus === "loading" && <LinearProgress/>}
 
             <Routes>
-                {/*<Route path={"/"} element={<TodoLists/>}/>*/}
                 <Route path={"/"} element={<Navigate to={"/login"}/>}/>
+                <Route path={"to-do-lists"} element={<TodoLists/>}/>
                 <Route path={"login"} element={<Login/>}/>
-
-                <Route path={"/404"} element={<h1>404: PAGE NOT FOUND</h1>}/>
+                <Route path={"404"} element={<h1>404: PAGE NOT FOUND</h1>}/>
                 <Route path="*" element={<Navigate to={"/404"}/>}/>
             </Routes>
 

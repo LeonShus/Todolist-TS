@@ -70,7 +70,7 @@ export const logOut = () => (dispatch: Dispatch) => {
     authApi.logOut()
         .then(res => {
             if (res.data.resultCode === RequestResultCode.complete) {
-                dispatch(setIsLoggedInAC({value: true}))
+                dispatch(setIsLoggedInAC({value: false}))
             } else {
                 if (res.data.messages.length) {
                     dispatch(setErrorAC({error: res.data.messages[0]}))

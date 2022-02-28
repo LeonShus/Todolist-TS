@@ -3,11 +3,11 @@ import {useDispatch, useSelector} from "react-redux";
 import {TasksStateType} from "../../bll/reducers/TaskReducer";
 import {createTodosTC, setTodosTC, TodoListDomainType} from "../../bll/reducers/TodoListReducer";
 import {AppRootStateType} from "../../bll/store";
-import {RequestStatusType} from "../../bll/reducers/AppReducer";
+// import {RequestStatusType} from "../../bll/reducers/AppReducer";
 import Grid from "@mui/material/Grid";
 import {AddItemForm} from "../DefaultComponent/Input/AddItemForm";
 import {Container} from "@mui/material";
-import { TodoList } from "../TodoList/TodoList";
+import {TodoList} from "../TodoList/TodoList";
 import {Navigate} from "react-router-dom";
 
 
@@ -44,12 +44,11 @@ export const TodoLists = React.memo(() => {
 
 
     //less15
-    const loadingStatus = useSelector<AppRootStateType, RequestStatusType>(state => state.app.status)
-    console.log(loadingStatus)
+    // const loadingStatus = useSelector<AppRootStateType, RequestStatusType>(state => state.app.status)
 
-    if(!isLoggedIn){
-        return(
-            <Navigate to={"login"}/>
+    if (!isLoggedIn) {
+        return (
+            <Navigate to={"/login"}/>
         )
     }
 

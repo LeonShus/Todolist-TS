@@ -9,7 +9,7 @@ type ButtonFilterLine = {
 }
 
 export const ButtonFilterLine = React.memo(({filter, filteredTasks}: ButtonFilterLine) => {
-    console.log("ButtonFilterLine")
+
 
     return (
 

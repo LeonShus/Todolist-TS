@@ -67,7 +67,7 @@ export const getTasksFromTodos = () => {
     useEffect(() => {
         todolistApi.getTasks(todolistId)
             .then(res => {
-                console.log(res.data.items)
+
                 setState(res.data)
             })
     }, [])
@@ -83,7 +83,7 @@ export const createTask = () => {
     useEffect(() => {
         todolistApi.createTask(todolistId, title)
             .then(res => {
-                console.log(res.data)
+
                 setState(res.data)
             })
     }, [])
@@ -99,7 +99,7 @@ export const deleteTask = () => {
     useEffect(() => {
         todolistApi.deleteTask(todolistId, taskId)
             .then(res => {
-                console.log(res.data)
+
                 setState(res.data)
             })
     }, [])
@@ -119,7 +119,6 @@ export const updateTask = () => {
     useEffect(() => {
         todolistApi.upgradeTask(todolistId, taskId, changedTask)
             .then(res => {
-                console.log(res.data)
                 setState(res.data)
             })
     }, [])
@@ -134,14 +133,14 @@ export const CrudTodoLists = () => {
     const addItem = (title: string) => {
         todolistApi.createTodolist(title)
             .then(res => {
-                console.log(res)
+
                 getTodos()
             })
     }
     const deleteItem = (todolistId: string) => {
         todolistApi.deleteTodolist(todolistId)
             .then(res => {
-                console.log(res)
+
                 getTodos()
             })
     }
@@ -150,7 +149,7 @@ export const CrudTodoLists = () => {
         let title = "Changed"
         todolistApi.updateTodolistTitle(todolistId, title)
             .then((res) => {
-                console.log(res)
+
                 getTodos()
             })
     }
