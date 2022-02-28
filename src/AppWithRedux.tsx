@@ -8,7 +8,6 @@ import {RequestStatusType} from "./bll/reducers/AppReducer";
 import {ErrorSnackbar} from "./components/DefaultComponent/ErrorSnackbar/errorSnackBar";
 import {Login} from "./features/login/login";
 import {Navigate, Route, Routes} from "react-router-dom";
-import {TodoLists} from "./components/TodoLists/TodoLists";
 import {authMe} from "./bll/reducers/AuthReducer";
 
 
@@ -26,7 +25,7 @@ export const AppWithRedux = () => {
 
     if (!isInitialized) {
         return <div
-            style={{position: 'fixed', top: '30%', textAlign: 'center', width: '100%'}}>
+            style={{position: "fixed", top: "30%", textAlign: "center", width: "100%"}}>
             <LinearProgress/>
         </div>
     }
@@ -39,7 +38,8 @@ export const AppWithRedux = () => {
             {loadingStatus === "loading" && <LinearProgress/>}
 
             <Routes>
-                <Route path={"/"} element={<TodoLists/>}/>
+                {/*<Route path={"/"} element={<TodoLists/>}/>*/}
+                <Route path={"/"} element={<Navigate to={"/login"}/>}/>
                 <Route path={"login"} element={<Login/>}/>
 
                 <Route path={"/404"} element={<h1>404: PAGE NOT FOUND</h1>}/>
