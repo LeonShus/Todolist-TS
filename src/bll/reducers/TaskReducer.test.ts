@@ -1,4 +1,4 @@
-import { v1 } from "uuid";
+import {v1} from "uuid";
 import {
     addTaskAC,
     changeTaskStatusAC,
@@ -47,7 +47,7 @@ beforeEach(() => {
 
 test("correct task should be deleted from correct array", () => {
 
-    const action = removeTaskAC(todoListId_02,"2");
+    const action = removeTaskAC({todoListId: todoListId_02, taskId: "2"});
 
     const endState = tasksReducer(startState, action)
 
@@ -82,7 +82,7 @@ test("correct task should be added to correct array", () => {
         order: 0, priority: TaskPriorities.Low
     }
 
-    const action = addTaskAC(todoListId_02, task);
+    const action = addTaskAC({todoListId: todoListId_02, task: task});
 
     const endState = tasksReducer(startState, action)
 

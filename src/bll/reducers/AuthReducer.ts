@@ -2,6 +2,7 @@ import {Dispatch} from "redux"
 import {isInitializedAC, setErrorAC, setLoadingBarStatusAC} from "./AppReducer";
 import {authApi, RequestResultCode} from "../../api/todolistApi";
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {setTodoListsAC} from "./TodoListReducer";
 
 
 const initialState = {
@@ -71,6 +72,9 @@ export const logOut = () => (dispatch: Dispatch) => {
         .then(res => {
             if (res.data.resultCode === RequestResultCode.complete) {
                 dispatch(setIsLoggedInAC({value: false}))
+
+
+                dispatch(setTodoListsAC({todos: []}))
             } else {
                 if (res.data.messages.length) {
                     dispatch(setErrorAC({error: res.data.messages[0]}))

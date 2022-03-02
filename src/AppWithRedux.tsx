@@ -19,7 +19,6 @@ export const AppWithRedux = () => {
     //Loading bar
     const loadingStatus = useSelector<AppRootStateType, RequestStatusType>(state => state.app.status)
 
-
     useEffect(() => {
         dispatch(authMe())
     }, [dispatch])
