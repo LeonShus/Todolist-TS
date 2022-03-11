@@ -3,10 +3,9 @@ import {useDispatch, useSelector} from "react-redux";
 import {TasksStateType} from "../../bll/reducers/TaskReducer";
 import {createTodosTC, setTodosTC, TodoListDomainType} from "../../bll/reducers/TodoListReducer";
 import {AppRootStateType} from "../../bll/store";
-// import {RequestStatusType} from "../../bll/reducers/AppReducer";
 import Grid from "@mui/material/Grid";
 import {AddItemForm} from "../DefaultComponent/Input/AddItemForm";
-import {Container} from "@mui/material";
+import styles from "./TodoLists.module.css"
 import {TodoList} from "../TodoList/TodoList";
 import {Navigate} from "react-router-dom";
 
@@ -54,16 +53,16 @@ export const TodoLists = React.memo(() => {
 
     return (
         <>
-            <Container fixed>
+            <div className={styles.container}>
                 {/*Add TodoList*/}
-                <Grid container sx={{padding: "10px 0 10px "}}>
+                <div className={styles.addContainer}>
                     <AddItemForm addItem={addToDoList}/>
-                </Grid>
+                </div>
                 {/*TodoLists*/}
-                <Grid container spacing={5}>
+                <div className={styles.todosContainer}>
                     {todoListsComponents}
-                </Grid>
-            </Container>
+                </div>
+            </div>
         </>
     );
 })

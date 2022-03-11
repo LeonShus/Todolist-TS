@@ -88,14 +88,21 @@ export const TodoList = React.memo((props: TodoListPropsType) => {
 
     return (
 
-        <Paper sx={{padding: "10px 20px 20px 20px"}}>
+        <Paper
+            sx={{
+                position: "relative",
+                padding: "20px 20px 20px 20px",
+                margin: "10px 10px 10px 10px",
+                width: "260px"
+            }}>
             {/*RemoveTask*/}
             <IconButton onClick={removeTodoList}
                         sx={{
                             margin: "0",
                             padding: "0",
-                            position: "relative",
-                            left: "230px",
+                            position: "absolute",
+                            left: "272px",
+                            top: "4px"
                         }}
                         disabled={props.entityStatus === "loading"}
             >

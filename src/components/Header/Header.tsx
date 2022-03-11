@@ -26,6 +26,7 @@ export const Header = () => {
                 <Typography variant="h6" component={"span"}>
                     TodoLists
                 </Typography>
+
                 {isLoggedIn
                     ? <Button color="inherit"
                               variant={"outlined"}

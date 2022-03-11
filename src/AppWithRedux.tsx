@@ -1,5 +1,4 @@
 import React, {useEffect} from "react";
-import "./App.css";
 import {LinearProgress} from "@mui/material";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "./bll/store";
