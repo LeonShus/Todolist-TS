@@ -1,9 +1,13 @@
 import {todoListId_01, todoListId_02} from "./TaskReducer.test";
 import {
-    addTodolistAC, changeTodoListTitleAC,
-    FilterTasksType, filterTodoListAC, removeTodoListAC,
+    addTodolistAC,
+    changeTodoListTitleAC,
+    FilterTasksType,
+    filterTodoListAC,
+    removeTodoListAC,
     TodoListDomainType,
-    todoListReducer, TodoListType
+    todoListReducer,
+    TodoListType
 } from "./TodoListReducer";
 
 let startState: Array<TodoListDomainType>
@@ -18,7 +22,7 @@ beforeEach(() => {
 
 test("correct todolist should be removed", () => {
 
-    const endState = todoListReducer(startState, removeTodoListAC({todoListId: todoListId_01 }))
+    const endState = todoListReducer(startState, removeTodoListAC({todoListId: todoListId_01}))
 
     expect(endState.length).toBe(1);
     expect(endState[0].id).toBe(todoListId_02);
@@ -27,7 +31,7 @@ test("correct todolist should be removed", () => {
 
 test("correct todolist should be added", () => {
 
-    let todo: TodoListType = {id: "3", title: "New Todolist", addedDate: "",order: 0}
+    let todo: TodoListType = {id: "3", title: "New Todolist", addedDate: "", order: 0}
 
     const endState = todoListReducer(startState, addTodolistAC({todos: todo}))
 
@@ -38,7 +42,10 @@ test("correct todolist should be added", () => {
 
 test("correct todolist should change its name", () => {
 
-    const endState = todoListReducer(startState, changeTodoListTitleAC({todoListId: todoListId_02, title: "New Todolist title"}))
+    const endState = todoListReducer(startState, changeTodoListTitleAC({
+        todoListId: todoListId_02,
+        title: "New Todolist title"
+    }))
 
     expect(endState[0].title).toBe("WantTo sell");
     expect(endState[1].title).toBe("New Todolist title");

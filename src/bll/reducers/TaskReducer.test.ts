@@ -5,7 +5,8 @@ import {
     TaskPriorities,
     tasksReducer,
     TasksStateType,
-    TaskStatuses
+    TaskStatuses,
+    upgradeTaskAC
 } from "./TaskReducer";
 
 export const todoListId_01 = v1()
@@ -93,12 +94,13 @@ test("correct task should be added to correct array", () => {
 
 test("status of specified task should be changed", () => {
 
-    const action = changeTaskStatusAC({
-        id: "1", title: "HTML", status: TaskStatuses.Completed, todoListId: todoListId_02,
+    const task = {
+        id: "1", title: "new Task", status: TaskStatuses.Completed, todoListId: todoListId_02,
         completed: false, addedDate: "", deadline: "", description: "", startDate: "",
         order: 0, priority: TaskPriorities.Low
-    });
-    const endState = tasksReducer(startState, action)
+    }
+
+    const endState = tasksReducer(startState, upgradeTaskAC({task}))
 
     expect(endState[todoListId_01][1].status).toBe(TaskStatuses.New);
     expect(endState[todoListId_02][0].status).toBe(TaskStatuses.Completed);
@@ -112,7 +114,7 @@ test("task title should change", () => {
         order: 0, priority: TaskPriorities.Low
     }
 
-    const action = changeTaskTitleAC(task);
+    const action = upgradeTaskAC({task});
 
     const endState = tasksReducer(startState, action)
 
