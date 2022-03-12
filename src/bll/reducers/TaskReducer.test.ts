@@ -1,8 +1,6 @@
 import {v1} from "uuid";
 import {
     addTaskAC,
-    changeTaskStatusAC,
-    changeTaskTitleAC,
     removeTaskAC,
     TaskPriorities,
     tasksReducer,
